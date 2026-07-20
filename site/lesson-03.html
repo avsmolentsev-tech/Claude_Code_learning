@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Установка Claude Code на компьютер — М0, урок 3</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <a class="logo" href="index.html">ИИ-агенты <span>для предпринимателей</span></a>
+    <a class="small" href="index.html" style="color:#10A37F;text-decoration:none">← К программе</a>
+  </div>
+</header>
+
+<section class="hero" style="padding-bottom:0">
+  <div class="container">
+    <span class="badge">Модуль 0 · Новичок · ~30 мин</span>
+    <h1>Установка Claude Code на компьютер (Windows и Mac)</h1>
+    <div class="note">Факты и команды сверены с официальной документацией code.claude.com/docs 20.07.2026.</div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+
+    <h2>Что получишь</h2>
+    <p>Работающий ИИ-агент на твоём компьютере: открываешь терминал, пишешь <code>claude</code> — и ставишь задачи русским языком.</p>
+
+    <h2>Кому и зачем</h2>
+    <p>Для владельца обычного ноутбука — Windows 10/11 или Mac (macOS 13+). Никаких серверов, никакого программирования — агент ставится на твой личный компьютер и работает с твоими файлами. Урок разделён на две ветки: иди по своей системе, дальше всё общее.</p>
+
+    <h2>Шаги</h2>
+
+    <h3>Шаг 1. Пойми, что такое терминал (1 минута)</h3>
+    <p>Терминал — это текстовый чат с компьютером: ты пишешь команду, компьютер отвечает. Всё.</p>
+    <p><strong>Windows:</strong> нажми <strong>Пуск</strong>, набери <code>PowerShell</code>, запусти «Windows PowerShell». Появится окно со строкой вида <code>PS C:\Users\Имя&gt;</code> — буквы <code>PS</code> в начале значат, что ты в PowerShell (это важно: команды ниже — именно для него).</p>
+    <p><strong>Mac:</strong> нажми <strong>Cmd+Пробел</strong> (поиск Spotlight), набери <code>Терминал</code>, нажми Enter. Появится окно со строкой вида <code>имя@MacBook ~ %</code>.</p>
+
+    <h3>Шаг 2. Установи Claude Code (основной путь)</h3>
+    <p>Скопируй в терминал одну команду и нажми Enter. Установщик всё сделает сам, права администратора не нужны.</p>
+    <p><strong>Windows (PowerShell):</strong></p>
+    <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+    <p><strong>Mac (Терминал):</strong></p>
+    <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+    <p>Дождись сообщения об успешной установке, затем <strong>закрой и заново открой терминал</strong>. Проверка (одинаково на обеих системах):</p>
+    <pre><code>claude --version</code></pre>
+    <p>Увидел номер версии (например, <code>2.1.211 (Claude Code)</code>) — установка удалась. Бонус: этот способ сам обновляется в фоне, ничего поддерживать не нужно.</p>
+
+    <h3>Шаг 3. Установи Git (рекомендуется, 5 минут)</h3>
+    <p>Git расширяет возможности агента при работе с командами.</p>
+    <p><strong>Windows:</strong> скачай с <code>git-scm.com/download/win</code>, при установке жми «Далее» со всеми настройками по умолчанию.</p>
+    <p><strong>Mac:</strong> набери в Терминале <code>git --version</code> — если Git не установлен, macOS сама предложит поставить «Command Line Tools», соглашайся и жди. Это всё.</p>
+
+    <h3>Шаг 4. Запусти и авторизуйся</h3>
+    <pre><code>claude</code></pre>
+    <p>При первом запуске откроется браузер — войди в аккаунт claude.ai из урока 02 (VPN должен быть включён, если он нужен тебе для claude.ai). Вернись в терминал — агент готов.</p>
+
+    <h3>Шаг 5. Первая проверка</h3>
+    <p>Прямо в открывшемся диалоге напиши:</p>
+    <blockquote>Создай на рабочем столе файл заметка.txt со списком дел на завтра из трёх пунктов</blockquote>
+    <p>Агент спросит разрешение на создание файла — подтверди. Сходи на рабочий стол: файл там. Поздравляю, у тебя есть агент.</p>
+
+    <h3>Запасной путь (если шаг 2 не сработал)</h3>
+    <p><strong>Windows:</strong></p>
+    <ol>
+      <li>Через магазин пакетов: <code>winget install Anthropic.ClaudeCode</code> (после установки перезапусти PowerShell).</li>
+      <li>Или через Node.js: установи Node.js <strong>версии 22 или новее</strong> с nodejs.org (в инсталлере оставь галку «Add to PATH»), перезапусти PowerShell, затем <code>npm install -g @anthropic-ai/claude-code</code>.</li>
+    </ol>
+    <p><strong>Mac:</strong></p>
+    <ol>
+      <li>Через Homebrew (если пользуешься): <code>brew install --cask claude-code</code>.</li>
+      <li>Или через Node.js 22+ с nodejs.org, затем <code>npm install -g @anthropic-ai/claude-code</code>.</li>
+    </ol>
+    <p>Диагностика любых проблем на обеих системах: команда <code>claude doctor</code> — покажет, что не так с установкой.</p>
+
+    <h2>Чек-лист</h2>
+    <ul class="checklist">
+      <li><code>claude --version</code> показывает номер версии</li>
+      <li><code>claude</code> запускается и я авторизован</li>
+      <li>Агент создал файл на рабочем столе по моей просьбе</li>
+    </ul>
+
+    <h2>Типичные ошибки</h2>
+
+    <h3>Общие</h3>
+    <table>
+      <tr><th>Симптом</th><th>Причина</th><th>Решение</th></tr>
+      <tr><td><code>claude не распознан</code> / <code>command not found</code></td><td>Терминал кеширует пути</td><td>Полностью закрой и заново открой терминал; не помогло — перезагрузи компьютер</td></tr>
+      <tr><td>Не открывается окно авторизации</td><td>claude.ai недоступен из сети</td><td>Проверь: открывается ли claude.ai в браузере. Нет — включи/смени VPN. Скопируй ссылку из терминала в браузер вручную</td></tr>
+      <tr><td>Агент отвечает очень медленно</td><td>Исчерпан лимит подписки</td><td>Проверь план на claude.ai (урок 02); лимиты Pro восстанавливаются через несколько часов</td></tr>
+    </table>
+
+    <h3>Windows</h3>
+    <table>
+      <tr><th>Симптом</th><th>Причина</th><th>Решение</th></tr>
+      <tr><td><code>irm не распознан...</code></td><td>Ты в CMD, а не в PowerShell</td><td>В начале строки должно быть <code>PS</code>. Открой именно Windows PowerShell</td></tr>
+      <tr><td>«Запуск скриптов отключён»</td><td>Политика безопасности PowerShell</td><td>PowerShell от имени администратора → <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code> → <code>Y</code> → перезапустить</td></tr>
+      <tr><td>Установка зависает, «Access Denied»</td><td>Антивирус блокирует</td><td>Временно отключи антивирус, после установки добавь папку <code>%USERPROFILE%\.local\share\claude</code> в исключения</td></tr>
+      <tr><td><code>npm не распознан</code> (запасной путь)</td><td>Node.js без галки PATH</td><td>Переустанови Node.js с nodejs.org, отметь «Add to PATH», перезагрузись</td></tr>
+      <tr><td>Просит Python</td><td>Python не установлен</td><td>Microsoft Store → «Python 3.12» → установить → перезапустить PowerShell</td></tr>
+    </table>
+
+    <h3>Mac</h3>
+    <table>
+      <tr><th>Симптом</th><th>Причина</th><th>Решение</th></tr>
+      <tr><td><code>curl: command not found</code></td><td>Урезанная система (редкость)</td><td>Установи Command Line Tools: <code>xcode-select --install</code>, затем повтори</td></tr>
+      <tr><td>После установки <code>claude</code> не находится</td><td>Папка <code>~/.local/bin</code> не в PATH</td><td>Закрой-открой Терминал; не помогло — <code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</code> и перезапусти Терминал</td></tr>
+      <tr><td>Запросы доступа к папкам</td><td>Защита macOS</td><td>Разреши — стандартный запрос доступа к файлам, как у любого приложения</td></tr>
+    </table>
+
+    <h2>Домашнее задание</h2>
+    <p>Попроси агента навести порядок в копии (!) какой-нибудь папки: «разложи файлы по подпапкам по типам — документы, картинки, таблицы». Посмотри, как он спрашивает разрешения и отчитывается о сделанном.</p>
+
+    <h2>Заметки из практики</h2>
+    <p class="muted">Прошлый поток показал: 90% проблем установки решаются простым «закрой и открой терминал заново». Прежде чем паниковать — перезапусти терминал, затем <code>claude doctor</code>.</p>
+
+    <nav class="lesson-nav">
+      <a class="disabled" href="#">← Урок 2. Регистрация и оплата</a>
+      <a class="disabled" href="#">Урок 4. Первый диалог →</a>
+    </nav>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container"><p><a href="index.html" style="color:#10A37F;text-decoration:none">← Вернуться к программе курса</a></p></div>
+</footer>
+
+</body>
+</html>

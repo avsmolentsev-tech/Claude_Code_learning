@@ -1,0 +1,154 @@
+/* Стиль курса — по materials/DESIGN.md */
+:root {
+  --text: #171717;
+  --text-2: #6B7280;
+  --accent: #10A37F;
+  --accent-hover: #0D8C6D;
+  --line: #E5E7EB;
+  --card: #F9FAFB;
+  --code-bg: #F3F4F6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: #FFFFFF;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+.container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+header.site {
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+}
+header.site .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 600; text-decoration: none; color: var(--text); }
+.logo span { color: var(--accent); }
+h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 16px; }
+h2 { font-size: 1.5rem; font-weight: 600; line-height: 1.2; margin: 48px 0 16px; }
+h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.2; margin: 32px 0 12px; }
+p { margin-bottom: 16px; }
+.muted { color: var(--text-2); }
+.small { font-size: 0.875rem; }
+
+.hero { padding: 64px 0 48px; }
+.hero p.lead { font-size: 1.25rem; color: var(--text-2); max-width: 640px; }
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  background: rgba(16, 163, 127, 0.1);
+  border-radius: 8px;
+  padding: 4px 10px;
+  margin-bottom: 16px;
+}
+.level-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  margin: 48px 0 16px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+.card h3 { margin: 0 0 8px; }
+.card p { margin: 0; color: var(--text-2); }
+.card .status { font-size: 0.875rem; margin-top: 12px; display: block; }
+.card a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.card a:hover { color: var(--accent-hover); }
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.btn:hover { background: var(--accent-hover); }
+
+pre, code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+}
+pre {
+  background: var(--code-bg);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+code { background: var(--code-bg); border-radius: 4px; padding: 2px 6px; }
+pre code { background: none; padding: 0; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  border-bottom: 2px solid var(--line);
+}
+td { padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:hover { background: var(--card); }
+
+ul.checklist { list-style: none; margin-bottom: 24px; }
+ul.checklist li { padding: 8px 0 8px 32px; position: relative; }
+ul.checklist li::before {
+  content: "";
+  position: absolute; left: 0; top: 12px;
+  width: 16px; height: 16px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+ol, ul { margin: 0 0 16px 24px; }
+li { margin-bottom: 8px; }
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 8px 16px;
+  background: var(--card);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 16px;
+}
+.note {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  font-size: 0.875rem;
+  color: var(--text-2);
+}
+.lesson-nav {
+  display: flex; justify-content: space-between;
+  border-top: 1px solid var(--line);
+  margin-top: 64px; padding: 24px 0 64px;
+}
+.lesson-nav a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.lesson-nav a:hover { color: var(--accent-hover); }
+.lesson-nav .disabled { color: var(--text-2); pointer-events: none; }
+footer.site {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 48px;
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
