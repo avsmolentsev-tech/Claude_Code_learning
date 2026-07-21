@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLAUDE.md и файлы, которые надо настроить сразу — М0, урок 6</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <a class="logo" href="index.html">ИИ-агенты <span>для предпринимателей</span></a>
+    <a class="small" href="index.html" style="color:#10A37F;text-decoration:none">← К программе</a>
+  </div>
+</header>
+
+<section class="hero" style="padding-bottom:0">
+  <div class="container">
+    <span class="badge">Модуль 0 · Новичок · ~30 мин</span>
+    <h1>CLAUDE.md и файлы, которые надо настроить сразу</h1>
+    <div class="note">CLAUDE.md — не программирование, а обычный текст. Файл, который агент перечитывает при каждом запуске: написал один раз — работает всегда.</div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+
+    <h2>Что получишь</h2>
+    <p>«Должностную инструкцию» для твоего агента: он начнёт отвечать по-русски, считать в рублях и соблюдать твои правила — без напоминаний в каждом диалоге. Плюс правильную структуру папок на старте.</p>
+
+    <h2>Кому и зачем</h2>
+    <p>Агент — как новый сотрудник: толковый, но о твоём бизнесе не знает ничего и каждое утро приходит «с чистого листа». CLAUDE.md — файл с инструкциями, который агент перечитывает при каждом запуске. Это самый недооценённый час настройки из всего курса.</p>
+
+    <h2>Шаги</h2>
+
+    <h3>Шаг 1. Пойми два уровня инструкций</h3>
+    <p><strong>Глобальный</strong> — «про тебя», действует во всех папках и проектах. Windows: <code>C:\Users\Имя\.claude\CLAUDE.md</code>; Mac: <code>~/.claude/CLAUDE.md</code> (папка скрытая — в Finder покажи скрытые файлы сочетанием Cmd+Shift+точка).</p>
+    <p><strong>Проектный</strong> <code>CLAUDE.md</code> в папке задачи — «про эту работу». Действует только там. Агент читает оба: сначала твой общий, потом проектный.</p>
+
+    <div class="scheme">
+      <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="190" y="1" width="300" height="60" rx="10" class="accent-tint accent-stroke" stroke-width="2"/>
+        <text x="340" y="26" text-anchor="middle" class="label-strong" style="fill:var(--accent)">ГЛОБАЛЬНЫЙ CLAUDE.md</text>
+        <text x="340" y="45" text-anchor="middle" class="label">«про тебя» — действует везде, читается первым</text>
+
+        <line x1="340" y1="61" x2="150" y2="120" class="line-stroke" stroke-width="2"/>
+        <line x1="340" y1="61" x2="340" y2="120" class="line-stroke" stroke-width="2"/>
+        <line x1="340" y1="61" x2="530" y2="120" class="line-stroke" stroke-width="2"/>
+
+        <rect x="50" y="120" width="200" height="130" rx="10" class="box-fill line-stroke"/>
+        <rect x="65" y="134" width="20" height="7" rx="2" class="grey-fill"/>
+        <text x="150" y="150" text-anchor="middle" class="label" style="font-weight:600">Отчёты по продажам</text>
+        <rect x="65" y="164" width="170" height="18" rx="4" class="muted-fill"/>
+        <text x="150" y="177" text-anchor="middle" class="mono-label">CLAUDE.md проекта</text>
+        <text x="150" y="205" text-anchor="middle" class="label">выгрузки из 1С,</text>
+        <text x="150" y="221" text-anchor="middle" class="label">правила отчётов</text>
+
+        <rect x="240" y="120" width="200" height="130" rx="10" class="box-fill line-stroke"/>
+        <rect x="255" y="134" width="20" height="7" rx="2" class="grey-fill"/>
+        <text x="340" y="150" text-anchor="middle" class="label" style="font-weight:600">Документы</text>
+        <rect x="255" y="164" width="170" height="18" rx="4" class="muted-fill"/>
+        <text x="340" y="177" text-anchor="middle" class="mono-label">CLAUDE.md проекта</text>
+        <text x="340" y="205" text-anchor="middle" class="label">договоры,</text>
+        <text x="340" y="221" text-anchor="middle" class="label">шаблоны</text>
+
+        <rect x="430" y="120" width="200" height="130" rx="10" class="box-fill line-stroke"/>
+        <rect x="445" y="134" width="20" height="7" rx="2" class="grey-fill"/>
+        <text x="530" y="150" text-anchor="middle" class="label" style="font-weight:600">Контент</text>
+        <rect x="445" y="164" width="170" height="18" rx="4" class="muted-fill"/>
+        <text x="530" y="177" text-anchor="middle" class="mono-label">CLAUDE.md проекта</text>
+        <text x="530" y="205" text-anchor="middle" class="label">посты,</text>
+        <text x="530" y="221" text-anchor="middle" class="label">тексты</text>
+      </svg>
+    </div>
+    <p class="term-caption">Схема: один глобальный CLAUDE.md «про тебя» — и свой проектный в каждой рабочей папке, «про эту работу». Агент складывает оба.</p>
+
+    <h3>Шаг 2. Напиши глобальный CLAUDE.md</h3>
+    <p>Открой в VS Code папку <code>.claude</code> из своей домашней папки (если файла CLAUDE.md нет — создай). Лайфхак для обеих систем: можно просто попросить агента — «создай мне глобальный CLAUDE.md с таким содержимым…». Возьми за основу и перепиши под себя:</p>
+
+    <pre><code># Обо мне
+Я — [имя], владелец [бизнес: например, сети магазинов автозапчастей в Казани].
+Не программист: объясняй по-простому, без жаргона.
+
+# Правила
+- Общайся по-русски.
+- Суммы в рублях, формат: 1 234 567 ₽.
+- Даты в формате ДД.ММ.ГГГГ.
+- Перед удалением файлов или отправкой чего-либо в интернет — спрашивай.
+- Деловые документы пиши без канцелярита, коротко.</code></pre>
+
+    <p>Сохрани. Проверь: запусти агента в любой папке и спроси «сколько будет 1500 долларов по курсу 90?» — ответ должен прийти по-русски и в формате с ₽.</p>
+
+    <h3>Шаг 3. Заведи проектный CLAUDE.md</h3>
+    <ol>
+      <li>Открой в VS Code рабочую папку, например <code>ИИ-проекты\Отчёты по продажам</code>.</li>
+      <li>В панели агента набери команду <code>/init</code> — агент осмотрит папку и создаст черновик CLAUDE.md.</li>
+    </ol>
+
+    <div class="term">
+      <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="title">claude</span></div>
+      <div class="term-body"><span class="dim">&gt;</span> /init
+
+<span class="acc">●</span> Осматриваю папку: файлы выгрузок из 1С, формат sales_2026-07.xlsx.
+Создаю черновик CLAUDE.md с описанием структуры.
+
+  <strong>Create file</strong> <span class="dim">CLAUDE.md</span>
+  <span class="acc">❯ 1. Yes</span>
+    2. Yes, allow all edits during this session
+    3. No, and tell Claude what to do differently <span class="dim">(esc)</span></div>
+    </div>
+    <p class="term-caption">Команда <code>/init</code> — быстрый способ получить черновик проектного CLAUDE.md, а не писать с нуля.</p>
+
+    <p>Допиши руками главное, чего агент не знает:</p>
+
+    <pre><code># Что в этой папке
+Выгрузки из 1С по продажам. Колонки: дата, контрагент, номенклатура, сумма, менеджер.
+Файлы приходят раз в неделю, имя вида sales_2026-07.xlsx.
+
+# Правила проекта
+- Готовые отчёты складывай в подпапку reports/.
+- В отчётах не показывай наценку — только выручку.
+- Черновики удаляй после подтверждения результата.</code></pre>
+
+    <h3>Шаг 4. Настрой стартовую структуру папок</h3>
+    <p>Минимальный набор, который стоит завести сегодня:</p>
+
+    <pre><code>ИИ-проекты\              (Windows: C:\ИИ-проекты\, Mac: ~/ИИ-проекты/)
+  Отчёты по продажам\   ← CLAUDE.md + выгрузки
+  Документы\            ← CLAUDE.md + договоры, шаблоны
+  Контент\              ← CLAUDE.md + посты, тексты</code></pre>
+
+    <p>Правило: <strong>одна задача — одна папка — свой CLAUDE.md</strong>. Агент в папке «Контент» не должен спотыкаться об выгрузки из 1С.</p>
+
+    <h3>Шаг 5. Узнай, что живёт рядом (пока без настройки)</h3>
+    <p>В папке проекта агент может создать служебную папку <code>.claude</code> — внутри неё:</p>
+    <ul>
+      <li><code>settings.json</code> — тонкая настройка разрешений («это можно без вопросов») — разберём в М9;</li>
+      <li>свои команды и скилы — научимся делать в М3.</li>
+    </ul>
+    <p>Сейчас просто знай, что они есть — трогать не нужно.</p>
+
+    <h2>Чек-лист</h2>
+    <ul class="checklist">
+      <li>Глобальный CLAUDE.md написан, агент отвечает по-русски и в рублях в любой папке</li>
+      <li>В одной рабочей папке есть проектный CLAUDE.md (через <code>/init</code> + правки руками)</li>
+      <li>Структура <code>ИИ-проекты</code> с папками по задачам создана</li>
+    </ul>
+
+    <h2>Типичные ошибки</h2>
+    <table>
+      <tr><th>Симптом</th><th>Причина</th><th>Решение</th></tr>
+      <tr><td>Агент игнорирует часть инструкций</td><td>CLAUDE.md — простыня на 3 страницы</td><td>Сокращай. Короткие списки работают, эссе — нет</td></tr>
+      <tr><td>Агент «путается в показаниях»</td><td>Противоречивые правила (в глобальном одно, в проектном другое)</td><td>Проверь оба файла, убери конфликт: проектный уточняет глобальный, а не спорит с ним</td></tr>
+      <tr><td>Вписал в CLAUDE.md весь прайс на 500 позиций</td><td>Перепутал инструкции с данными</td><td>CLAUDE.md — правила. Данные (прайсы, справочники) — отдельными файлами в папке, агент их найдёт</td></tr>
+      <tr><td>Создал CLAUDE.md, а агент не заметил</td><td>Файл создан после запуска агента</td><td>Перезапусти диалог — инструкции читаются на старте</td></tr>
+    </table>
+
+    <h2>Домашнее задание</h2>
+    <p>Напиши глобальный CLAUDE.md про свой бизнес и проектный — для одной реальной папки. Тест: задай агенту вопрос, где инструкции должны проявиться (валюта, язык, тон), и убедись, что они работают. Потом неделю дописывай по одному правилу каждый раз, когда агент сделал «не так, как ты привык».</p>
+
+    <h2>Заметки из практики</h2>
+    <p class="muted">Вопрос автора курса, породивший урок: «про CLAUDE.md — какие там файлы надо сразу настроить?» Ответ уместился в шаг 4: на старте достаточно глобального CLAUDE.md и папок с проектными. Всё остальное (настройки, скилы, хуки) — по мере роста, в свои модули.</p>
+
+    <nav class="lesson-nav">
+      <a href="lesson-05.html">← Урок 5. VS Code</a>
+      <a class="disabled" href="#">Модуль 1. Документы и таблицы →</a>
+    </nav>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container"><p><a href="index.html" style="color:#10A37F;text-decoration:none">← Вернуться к программе курса</a></p></div>
+</footer>
+
+</body>
+</html>
