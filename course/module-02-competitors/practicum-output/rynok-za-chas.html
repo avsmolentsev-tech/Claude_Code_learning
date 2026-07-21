@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рынок за час: офисная мебель в Казани</title>
+<style>
+:root {
+  --text: #171717; --text-2: #6B7280; --accent: #10A37F;
+  --line: #E5E7EB; --card: #F9FAFB; --amber: #F59E0B; --red: #EF4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+header { padding: 48px 0 24px; border-bottom: 1px solid var(--line); margin-bottom: 40px; }
+h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 8px; }
+h2 { font-size: 1.5rem; font-weight: 600; margin: 48px 0 20px; }
+.muted { color: var(--text-2); }
+.note {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 20px; font-size: 0.875rem; color: var(--text-2); margin: 16px 0 0;
+}
+table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 0.9375rem; }
+th { text-align: left; padding: 12px 14px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-2); border-bottom: 2px solid var(--line); vertical-align: bottom; }
+td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:hover { background: var(--card); }
+td.we { background: rgba(16,163,127,0.06); }
+th.we { color: var(--accent); }
+.tag { display: inline-block; font-size: 0.75rem; font-weight: 600; border-radius: 6px; padding: 2px 8px; margin: 1px 0; }
+.tag.g { background: rgba(16,163,127,0.12); color: #0B7A61; }
+.tag.a { background: rgba(245,158,11,0.14); color: #92610A; }
+.tag.r { background: rgba(239,68,68,0.12); color: #B91C1C; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.card h3 { font-size: 1rem; margin-bottom: 8px; }
+.card p { font-size: 0.9rem; color: var(--text-2); }
+.card .num { font-size: 1.4rem; font-weight: 600; color: var(--accent); display: block; margin-bottom: 6px; }
+footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--line); color: var(--text-2); font-size: 0.875rem; }
+@media (max-width: 800px) { .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Рынок за час: офисная мебель в Казани</h1>
+    <p class="muted">Разведка агентом по открытым сайтам · практикум М2 · 21.07.2026</p>
+    <div class="note">Учебная версия отчёта: конкуренты обезличены (А–Г). В рабочем файле ученика — реальные названия и ссылки на страницы-источники у каждой цифры. «Мы» — вымышленный магазин из сквозного примера курса.</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <h2>Сравнительная таблица</h2>
+  <table>
+    <tr>
+      <th></th>
+      <th class="we">МЫ (демо)</th>
+      <th>Конкурент А<br><span style="font-weight:400">федеральная сеть салонов</span></th>
+      <th>Конкурент Б<br><span style="font-weight:400">федеральный производитель</span></th>
+      <th>Конкурент В<br><span style="font-weight:400">местный салон, 24 года</span></th>
+      <th>Конкурент Г<br><span style="font-weight:400">местное производство</span></th>
+    </tr>
+    <tr>
+      <td><strong>Сегмент</strong></td>
+      <td class="we">средний</td>
+      <td>от бюджета до премиума</td>
+      <td>средний и выше, крупные заказы</td>
+      <td>средний-высокий</td>
+      <td>эконом</td>
+    </tr>
+    <tr>
+      <td><strong>Цены на сайте</strong></td>
+      <td class="we">открыто</td>
+      <td><span class="tag g">открыто</span> стулья от ~2 т.р., кабинеты 165+ т.р.</td>
+      <td><span class="tag r">по запросу</span> «гарантия лучшей цены»</td>
+      <td><span class="tag g">открыто</span> + скидки 10–50%</td>
+      <td><span class="tag g">открыто</span> столы от ~1,9 т.р., скидки до 63%</td>
+    </tr>
+    <tr>
+      <td><strong>Главное обещание</strong></td>
+      <td class="we">—</td>
+      <td>бесплатный дизайн-проект, «офис под ключ», тест-драйв</td>
+      <td>производитель, 100 000 моделей, гарантия до 10 лет, крупные клиенты</td>
+      <td>опыт («тысячи клиентов»), доставка за 1 день из наличия</td>
+      <td>«недорого», «приехал — оплатил — забрал»</td>
+    </tr>
+    <tr>
+      <td><strong>Услуги</strong></td>
+      <td class="we">доставка, сборка</td>
+      <td>проект, доставка, сборка, выезд, вывоз упаковки</td>
+      <td>проект «в подарок», доставка с подъёмом, сборка, «под ключ»</td>
+      <td>бесплатный замер, сборка бесплатно от 100 т.р.</td>
+      <td>доставка, сборка, опт/розница</td>
+    </tr>
+    <tr>
+      <td><strong>Работа с тендерами</strong></td>
+      <td class="we">нет</td>
+      <td>не заявлено</td>
+      <td><span class="tag a">да, госзакупки</span></td>
+      <td><span class="tag a">да</span></td>
+      <td>не заявлено</td>
+    </tr>
+  </table>
+  <p class="note">Правило практикума: каждая ячейка в рабочем файле — со ссылкой на страницу, где это написано. Агент может неверно прочитать цену или устаревшую акцию — проверяй, прежде чем принимать решения.</p>
+
+  <h2>Что ищут люди (Вордстат)</h2>
+  <div class="note" style="border-color: var(--amber);">Этот раздел заполняется на занятии руками: Вордстат требует входа в Яндекс. Ученик снимает частотности по 5–7 запросам ниши («офисная мебель казань», «стол офисный купить», «кресло руководителя»...), агент помогает интерпретировать: что ищут чаще — «дёшево» или «под ключ», по каким словам продвигаются конкуренты.</div>
+
+  <h2>Три вывода для «нас»</h2>
+  <div class="cards">
+    <div class="card">
+      <span class="num">1</span>
+      <h3>Ниша поляризована</h3>
+      <p>Внизу — «недорого, забирай сразу» (Г), вверху — «офис под ключ с дизайн-проектом» (А, Б). Середина без внятного обещания — там сейчас «мы». Надо выбрать сторону или сформулировать своё.</p>
+    </div>
+    <div class="card">
+      <span class="num">2</span>
+      <h3>Дизайн-проект стал гигиеной</h3>
+      <p>Бесплатный проект обещают трое из четырёх. Если у «нас» его нет — мы проигрываем до разговора о цене. Если есть — это уже не преимущество, а входной билет.</p>
+    </div>
+    <div class="card">
+      <span class="num">3</span>
+      <h3>Тендеры — заметный канал</h3>
+      <p>Двое из четырёх открыто работают с госзакупками. Для «нас» это либо канал роста, либо объяснение, куда уходят крупные заказы. Смыкается с темой М7 (тендерный агент).</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">Отчёт собран ИИ-агентом за один час по открытым страницам · Иллюстрация к практикуму М2 «Анализ конкурентов и рынка» · Данные могут устареть — перепроверяй перед решениями</div>
+</footer>
+
+</body>
+</html>
