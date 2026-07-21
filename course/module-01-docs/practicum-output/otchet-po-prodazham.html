@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отчёт по продажам — demo-orders</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+:root {
+  --text: #171717;
+  --text-2: #6B7280;
+  --accent: #10A37F;
+  --accent-hover: #0D8C6D;
+  --line: #E5E7EB;
+  --card: #F9FAFB;
+  --code-bg: #F3F4F6;
+  --amber: #F59E0B;
+  --blue: #3B82F6;
+  --red: #EF4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: #FFFFFF;
+  line-height: 1.6;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+header { padding: 48px 0 32px; border-bottom: 1px solid var(--line); margin-bottom: 48px; }
+h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 8px; }
+.muted { color: var(--text-2); }
+h2 { font-size: 1.5rem; font-weight: 600; margin: 48px 0 24px; }
+
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.metric-card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2); margin-bottom: 8px; }
+.metric-card .value { font-size: 1.75rem; font-weight: 600; }
+.metric-card .sub { font-size: 0.875rem; color: var(--text-2); margin-top: 4px; }
+
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.chart-card { border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+.chart-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 16px; }
+.chart-card.full { grid-column: 1 / -1; }
+
+table { width: 100%; border-collapse: collapse; margin: 24px 0 64px; }
+th {
+  text-align: left; padding: 12px 16px; font-weight: 600; font-size: 0.75rem;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2);
+  border-bottom: 2px solid var(--line);
+}
+td { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+tr:hover { background: var(--card); }
+.status { font-size: 0.8125rem; }
+footer { padding: 24px 0 48px; color: var(--text-2); font-size: 0.875rem; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Отчёт по продажам</h1>
+    <p class="muted">Данные: demo-orders.csv (30 заказов, январь–июнь 2026) · сформировано агентом на практикуме М1</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="label">Всего заказов</div>
+      <div class="value">30</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Выручка</div>
+      <div class="value">1 036 000 ₽</div>
+      <div class="sub">без учёта отменённых</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Средний чек</div>
+      <div class="value">38 370 ₽</div>
+    </div>
+    <div class="metric-card">
+      <div class="label">Топ клиент</div>
+      <div class="value">ООО «Луч»</div>
+      <div class="sub">186 000 ₽</div>
+    </div>
+  </div>
+
+  <h2>Динамика и структура</h2>
+  <div class="charts">
+    <div class="chart-card full">
+      <h3>Выручка по месяцам</h3>
+      <canvas id="chartMonths"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Топ-5 клиентов по выручке</h3>
+      <canvas id="chartClients"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Заказы по статусам</h3>
+      <canvas id="chartStatus"></canvas>
+    </div>
+  </div>
+
+  <h2>Все заказы</h2>
+  <table>
+    <thead>
+      <tr><th>Клиент</th><th>Товар</th><th>Кол-во</th><th>Сумма</th><th>Дата</th><th>Статус</th></tr>
+    </thead>
+    <tbody id="ordersBody"></tbody>
+  </table>
+</div>
+
+<footer>
+  <div class="container">Отчёт — иллюстрация к уроку М1 «Документы и таблицы». Данные вымышленные (assets/demo-orders.csv).</div>
+</footer>
+
+<script>
+const data = {
+  months: ["2026-01","2026-02","2026-03","2026-04","2026-05","2026-06"],
+  revByMonth: [197000,131000,198000,144000,219000,147000],
+  top5Labels: ["ООО «Луч»","ИП Сидоров","Козлова А.И.","ООО «Вектор»","Новиков Д.С."],
+  top5Values: [186000,139000,132000,130000,125000],
+  statusLabels: ["Оплачен","Доставка","Новый","Отменён"],
+  statusValues: [20,4,3,3],
+  rows: [
+    {client:'ООО "Ромашка"',product:'Кресло офисное',qty:2,total:30000,date:'2026-01-05',status:'Оплачен'},
+    {client:'ИП Петров',product:'Стол письменный',qty:1,total:25000,date:'2026-01-12',status:'Оплачен'},
+    {client:'ООО "Звезда"',product:'Шкаф-купе',qty:1,total:45000,date:'2026-01-18',status:'Доставка'},
+    {client:'Козлова А.И.',product:'Стул барный',qty:4,total:32000,date:'2026-01-22',status:'Оплачен'},
+    {client:'ИП Сидоров',product:'Диван угловой',qty:1,total:65000,date:'2026-01-28',status:'Новый'},
+    {client:'ООО "Луч"',product:'Тумба прикроватная',qty:3,total:36000,date:'2026-02-03',status:'Оплачен'},
+    {client:'ООО "Вектор"',product:'Стол переговорный',qty:1,total:55000,date:'2026-02-10',status:'Оплачен'},
+    {client:'Новиков Д.С.',product:'Полка настенная',qty:5,total:25000,date:'2026-02-15',status:'Оплачен'},
+    {client:'ООО "Ромашка"',product:'Кресло офисное',qty:1,total:15000,date:'2026-02-20',status:'Оплачен'},
+    {client:'ИП Петров',product:'Диван угловой',qty:1,total:65000,date:'2026-02-25',status:'Отменён'},
+    {client:'ООО "Звезда"',product:'Стул барный',qty:6,total:48000,date:'2026-03-02',status:'Оплачен'},
+    {client:'Козлова А.И.',product:'Полка настенная',qty:2,total:10000,date:'2026-03-08',status:'Доставка'},
+    {client:'ИП Сидоров',product:'Стол письменный',qty:2,total:50000,date:'2026-03-14',status:'Оплачен'},
+    {client:'ООО "Луч"',product:'Шкаф-купе',qty:1,total:45000,date:'2026-03-20',status:'Оплачен'},
+    {client:'ООО "Вектор"',product:'Кресло офисное',qty:3,total:45000,date:'2026-03-25',status:'Оплачен'},
+    {client:'Новиков Д.С.',product:'Стол переговорный',qty:1,total:55000,date:'2026-04-01',status:'Новый'},
+    {client:'ООО "Ромашка"',product:'Тумба прикроватная',qty:2,total:24000,date:'2026-04-07',status:'Оплачен'},
+    {client:'ИП Петров',product:'Полка настенная',qty:8,total:40000,date:'2026-04-13',status:'Оплачен'},
+    {client:'ООО "Звезда"',product:'Кресло офисное',qty:4,total:60000,date:'2026-04-18',status:'Отменён'},
+    {client:'Козлова А.И.',product:'Стол письменный',qty:1,total:25000,date:'2026-04-24',status:'Оплачен'},
+    {client:'ИП Сидоров',product:'Стул барный',qty:3,total:24000,date:'2026-05-01',status:'Доставка'},
+    {client:'ООО "Луч"',product:'Диван угловой',qty:1,total:65000,date:'2026-05-08',status:'Оплачен'},
+    {client:'ООО "Вектор"',product:'Полка настенная',qty:6,total:30000,date:'2026-05-14',status:'Оплачен'},
+    {client:'Новиков Д.С.',product:'Шкаф-купе',qty:1,total:45000,date:'2026-05-20',status:'Оплачен'},
+    {client:'ООО "Ромашка"',product:'Стол переговорный',qty:1,total:55000,date:'2026-05-26',status:'Новый'},
+    {client:'ИП Петров',product:'Кресло офисное',qty:2,total:30000,date:'2026-06-01',status:'Оплачен'},
+    {client:'ООО "Звезда"',product:'Тумба прикроватная',qty:1,total:12000,date:'2026-06-07',status:'Оплачен'},
+    {client:'Козлова А.И.',product:'Диван угловой',qty:1,total:65000,date:'2026-06-13',status:'Доставка'},
+    {client:'ИП Сидоров',product:'Полка настенная',qty:4,total:20000,date:'2026-06-19',status:'Отменён'},
+    {client:'ООО "Луч"',product:'Стул барный',qty:5,total:40000,date:'2026-06-25',status:'Оплачен'}
+  ]
+};
+
+const chartColors = {
+  primary: '#10A37F', primaryLight: 'rgba(16, 163, 127, 0.1)',
+  secondary: '#3B82F6', grid: '#E5E7EB', text: '#6B7280'
+};
+const chartDefaults = {
+  responsive: true,
+  plugins: { legend: { labels: { font: { family: 'Inter, system-ui', size: 13 }, color: '#6B7280', usePointStyle: true, padding: 20 } } },
+  scales: {
+    x: { grid: { display: false }, ticks: { color: '#6B7280', font: { size: 12 } } },
+    y: { grid: { color: '#E5E7EB' }, ticks: { color: '#6B7280', font: { size: 12 } } }
+  }
+};
+
+new Chart(document.getElementById('chartMonths'), {
+  type: 'line',
+  data: { labels: data.months, datasets: [{ label: 'Выручка, ₽', data: data.revByMonth, borderColor: chartColors.primary, backgroundColor: chartColors.primaryLight, fill: true, tension: 0.3, borderWidth: 2 }] },
+  options: { ...chartDefaults, plugins: { legend: { display: false } } }
+});
+
+new Chart(document.getElementById('chartClients'), {
+  type: 'bar',
+  data: { labels: data.top5Labels, datasets: [{ label: 'Выручка, ₽', data: data.top5Values, backgroundColor: chartColors.primary, borderRadius: 6 }] },
+  options: { ...chartDefaults, plugins: { legend: { display: false } }, indexAxis: 'y' }
+});
+
+new Chart(document.getElementById('chartStatus'), {
+  type: 'doughnut',
+  data: { labels: data.statusLabels, datasets: [{ data: data.statusValues, backgroundColor: ['#10A37F','#F59E0B','#3B82F6','#EF4444'], borderWidth: 0 }] },
+  options: { plugins: { legend: { position: 'bottom', labels: { font: { family: 'Inter, system-ui', size: 13 }, color: '#6B7280', usePointStyle: true, padding: 16 } } } }
+});
+
+const tbody = document.getElementById('ordersBody');
+tbody.innerHTML = data.rows.map(r => `
+  <tr>
+    <td>${r.client}</td>
+    <td>${r.product}</td>
+    <td>${r.qty}</td>
+    <td>${r.total.toLocaleString('ru-RU')} ₽</td>
+    <td>${r.date}</td>
+    <td class="status">${r.status}</td>
+  </tr>
+`).join('');
+</script>
+
+</body>
+</html>
