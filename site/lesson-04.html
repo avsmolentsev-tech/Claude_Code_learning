@@ -41,11 +41,88 @@
       <li>В терминале перейди в неё: Windows — <code>cd C:\ИИ-проекты\Разбор документов</code>, Mac — <code>cd ~/ИИ-проекты/Разбор документов</code></li>
       <li>Запусти <code>claude</code>.</li>
     </ol>
+
+    <div class="term win">
+      <div class="term-bar"><span class="title">Windows PowerShell</span><span class="controls">–&nbsp;❐&nbsp;✕</span></div>
+      <div class="term-body">PS C:\Users\Имя&gt; mkdir "C:\ИИ-проекты\Разбор документов"
+PS C:\Users\Имя&gt; cd "C:\ИИ-проекты\Разбор документов"
+PS C:\ИИ-проекты\Разбор документов&gt; claude<span class="cursor"></span></div>
+    </div>
+    <p class="term-caption">Windows: создали папку, перешли в неё, запустили агента.</p>
+
+    <div class="term">
+      <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="title">имя — zsh — 80×24</span></div>
+      <div class="term-body">имя@MacBook ~ % mkdir -p ~/ИИ-проекты/"Разбор документов"
+имя@MacBook ~ % cd ~/ИИ-проекты/"Разбор документов"
+имя@MacBook Разбор документов % claude<span class="cursor"></span></div>
+    </div>
+    <p class="term-caption">Mac: то же самое — mkdir, cd, claude.</p>
+
     <p>Теперь агент работает именно здесь — не гуляет по всему компьютеру.</p>
+
+    <div class="scheme">
+      <svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="298" height="228" rx="12" class="muted-fill line-stroke"/>
+        <text x="20" y="28" class="label">ДРУГИЕ ПАПКИ И ДИСКИ</text>
+
+        <rect x="30" y="55" width="24" height="8" rx="2" class="grey-fill"/>
+        <rect x="30" y="62" width="90" height="55" rx="6" class="box-fill line-stroke" stroke-dasharray="4 3"/>
+        <text x="75" y="135" text-anchor="middle" class="label">Рабочий стол</text>
+
+        <rect x="160" y="55" width="24" height="8" rx="2" class="grey-fill"/>
+        <rect x="160" y="62" width="90" height="55" rx="6" class="box-fill line-stroke" stroke-dasharray="4 3"/>
+        <text x="205" y="135" text-anchor="middle" class="label">Загрузки</text>
+
+        <rect x="95" y="140" width="24" height="8" rx="2" class="grey-fill"/>
+        <rect x="95" y="147" width="90" height="55" rx="6" class="box-fill line-stroke" stroke-dasharray="4 3"/>
+        <text x="140" y="220" text-anchor="middle" class="label">Документы и другие диски</text>
+
+        <text x="150" y="45" text-anchor="middle" class="label" style="font-style:italic">агент их не видит</text>
+
+        <rect x="321" y="1" width="358" height="228" rx="12" class="box-fill line-stroke"/>
+        <text x="341" y="28" class="label-strong" style="fill:var(--accent)">ПАПКА, ГДЕ ЗАПУЩЕН CLAUDE</text>
+        <rect x="341" y="38" width="318" height="20" rx="4" class="muted-fill"/>
+        <text x="350" y="52" class="mono-label">cd ~/ИИ-проекты/Разбор документов</text>
+
+        <rect x="380" y="80" width="50" height="10" rx="2" class="accent-fill"/>
+        <rect x="380" y="90" width="280" height="110" rx="10" class="accent-tint accent-stroke" stroke-width="2"/>
+
+        <rect x="405" y="112" width="70" height="66" rx="6" class="box-fill line-stroke"/>
+        <rect x="415" y="126" width="50" height="6" rx="3" class="grey-fill"/>
+        <rect x="415" y="140" width="50" height="6" rx="3" class="grey-fill"/>
+        <rect x="415" y="154" width="34" height="6" rx="3" class="grey-fill"/>
+        <text x="440" y="196" text-anchor="middle" class="label" style="font-size:10px">договор.pdf</text>
+
+        <rect x="490" y="112" width="70" height="66" rx="6" class="box-fill line-stroke"/>
+        <rect x="500" y="126" width="50" height="6" rx="3" class="grey-fill"/>
+        <rect x="500" y="140" width="50" height="6" rx="3" class="grey-fill"/>
+        <rect x="500" y="154" width="30" height="6" rx="3" class="grey-fill"/>
+        <text x="525" y="196" text-anchor="middle" class="label" style="font-size:10px">заметка.txt</text>
+
+        <circle cx="625" cy="145" r="12" class="accent-fill">
+          <animate attributeName="opacity" values="1;0.35;1" dur="1.6s" repeatCount="indefinite"/>
+        </circle>
+        <text x="500" y="220" text-anchor="middle" class="label">агент видит только файлы внутри этой папки</text>
+      </svg>
+    </div>
+    <p class="term-caption">Схема: агент «слепой» ко всему, кроме папки, в которой его запустили командой <code>cd</code> + <code>claude</code>.</p>
 
     <h3>Шаг 2. Разберись с разрешениями</h3>
     <p>Перед действием (создать файл, запустить команду) агент <strong>спрашивает разрешение</strong> — ты увидишь запрос с вариантами «разрешить один раз / разрешить всегда / отказать». Это твой контроль над агентом.</p>
     <p>Режимы — от «спрашивать про каждый шаг» до «делай всё сам». Правило курса: <strong>пока учишься — пусть спрашивает</strong>. Разрешение «всегда» давай только действиям, которые понимаешь (например, «создавать файлы в этой папке»).</p>
+
+    <div class="term">
+      <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="title">claude</span></div>
+      <div class="term-body"><span class="dim">&gt;</span> разложи файлы по подпапкам по типам: документы, таблицы, картинки, остальное
+
+<span class="acc">●</span> Создаю подпапки и перемещаю файлы по типам.
+
+  <strong>Bash command</strong> <span class="dim">mkdir -p "Документы" "Таблицы" "Картинки" "Остальное" &amp;&amp; ...</span>
+  <span class="acc">❯ 1. Yes</span>
+    2. Yes, allow all edits during this session
+    3. No, and tell Claude what to do differently <span class="dim">(esc)</span></div>
+    </div>
+    <p class="term-caption">Иллюстрация. Разрешения бывают на разные действия: в уроке 03 агент спрашивал про создание файла, здесь — про выполнение команды (<code>Bash command</code>). Логика та же: 1 — «да».</p>
 
     <h3>Шаг 3. Три упражнения</h3>
     <p>Выполни по очереди (для первого — сначала сделай копию папки!):</p>
