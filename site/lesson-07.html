@@ -32,6 +32,43 @@
     <h2>Кому и зачем</h2>
     <p>Для каждого, у кого есть хоть одна выгрузка данных: заказы, платежи, остатки. Обычный путь — час в Excel с ВПР и сводными (или «попрошу бухгалтера на неделе»). Путь этого урока — 15 минут диалога с агентом. Заодно поймёшь главный навык работы с ИИ: <strong>качество ответа зависит от точности вопроса</strong>.</p>
 
+    <div class="scheme">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="80" width="110" height="70" rx="8" class="box-fill line-stroke"/>
+        <rect x="20" y="80" width="110" height="14" rx="4" class="grey-fill"/>
+        <text x="75" y="120" text-anchor="middle" class="mono-label">заказы.csv</text>
+        <text x="75" y="136" text-anchor="middle" class="label" style="font-size:10px">выгрузка</text>
+
+        <path d="M140 115 L195 115" class="line-stroke" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+        <circle cx="245" cy="115" r="45" class="accent-tint accent-stroke" stroke-width="2"/>
+        <circle cx="245" cy="105" r="7" class="accent-fill">
+          <animate attributeName="opacity" values="1;0.35;1" dur="1.6s" repeatCount="indefinite"/>
+        </circle>
+        <text x="245" y="135" text-anchor="middle" class="label-strong" style="fill:var(--accent)">АГЕНТ</text>
+
+        <path d="M295 100 L350 55" class="line-stroke" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <path d="M295 115 L350 115" class="line-stroke" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <path d="M295 130 L350 175" class="line-stroke" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+        <rect x="355" y="30" width="345" height="46" rx="8" class="box-fill line-stroke"/>
+        <text x="375" y="58" class="label-strong">5 ответов на вопросы</text>
+
+        <rect x="355" y="92" width="345" height="46" rx="8" class="box-fill line-stroke"/>
+        <text x="375" y="120" class="label-strong">Сводная таблица (Excel)</text>
+
+        <rect x="355" y="154" width="345" height="46" rx="8" class="box-fill line-stroke"/>
+        <text x="375" y="182" class="label-strong">HTML-отчёт с графиками</text>
+
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" class="line-stroke" style="fill:var(--line)"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    <p class="term-caption">Из одной выгрузки — три результата. Дальше в уроке пройдём все три шага.</p>
+
     <h2>Подготовка</h2>
     <ol>
       <li>Возьми одну реальную выгрузку: Excel или CSV. Годится всё, где есть колонки вида «клиент, сумма, дата».</li>
@@ -73,9 +110,15 @@
 
     <h3>Шаг 2. Сводная таблица в Excel (15 мин)</h3>
     <p>Попроси:</p>
-    <blockquote>Сделай сводную таблицу: выручка по клиентам и месяцам, с итогами. Отменённые не считай. Сохрани в Excel-файл.</blockquote>
+    <blockquote>Сделай сводную таблицу: выручка по клиентам и месяцам, с итогами. Отменённые не считай. Сохрани в Excel-файл — оформи прилично: цветную шапку, формат сумм с ₽, итоговую строку жирным.</blockquote>
+    <p class="muted small">Если не попросить про оформление отдельно — агент чаще всего сохранит голую таблицу без единой заливки, как сырой экспорт. Красота в Excel не подразумевается по умолчанию, её нужно явно заказать — как и в любой другой задаче.</p>
     <p>Агент напишет и выполнит скрипт (спросит разрешение — теперь ты знаешь, что это), в папке появится файл. Открой его обычным Excel и проверь пару цифр руками — привычка сверять результат должна появиться раньше, чем безоговорочное доверие.</p>
-    <p class="note" style="margin-bottom:24px">Живой пример на учебных данных: <a href="m1/svodnaya-vyruchka.xlsx">svodnaya-vyruchka.xlsx</a> — скачается файлом, открой в Excel.</p>
+
+    <div class="shot">
+      <img src="assets/m1-svodnaya-preview.png" alt="Сводная таблица: выручка по клиентам и месяцам, зелёная шапка, итоги жирным">
+    </div>
+    <p class="term-caption">Это реальный результат на учебных данных — не макет. Попроси «оформи красиво: цветную шапку, жирный итог, формат сумм с ₽» — и получишь так же, а не голую таблицу без единой заливки.</p>
+    <p class="note" style="margin-bottom:24px">Скачать файл целиком: <a href="m1/svodnaya-vyruchka.xlsx">svodnaya-vyruchka.xlsx</a>.</p>
 
     <h3>Шаг 3. HTML-отчёт с графиками (20 мин)</h3>
     <p>Попроси:</p>
