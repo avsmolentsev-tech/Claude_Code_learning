@@ -37,7 +37,24 @@
     <h3>Шаг 1. Пойми, что такое терминал (1 минута)</h3>
     <p>Терминал — это текстовый чат с компьютером: ты пишешь команду, компьютер отвечает. Всё.</p>
     <p><strong>Windows:</strong> нажми <strong>Пуск</strong>, набери <code>PowerShell</code>, запусти «Windows PowerShell». Появится окно со строкой вида <code>PS C:\Users\Имя&gt;</code> — буквы <code>PS</code> в начале значат, что ты в PowerShell (это важно: команды ниже — именно для него).</p>
+
+    <div class="term win">
+      <div class="term-bar"><span class="title">Windows PowerShell</span><span class="controls">–&nbsp;❐&nbsp;✕</span></div>
+      <div class="term-body">Windows PowerShell
+Copyright (C) Microsoft Corporation. Все права защищены.
+
+PS C:\Users\Имя&gt; <span class="cursor"></span></div>
+    </div>
+    <p class="term-caption">Такое окно — значит всё правильно: синий фон и <code>PS</code> в начале строки.</p>
+
     <p><strong>Mac:</strong> нажми <strong>Cmd+Пробел</strong> (поиск Spotlight), набери <code>Терминал</code>, нажми Enter. Появится окно со строкой вида <code>имя@MacBook ~ %</code>.</p>
+
+    <div class="term">
+      <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="title">имя — zsh — 80×24</span></div>
+      <div class="term-body"><span class="dim">Last login: Mon Jul 21 10:12:47 on console</span>
+имя@MacBook ~ % <span class="cursor"></span></div>
+    </div>
+    <p class="term-caption">Терминал на Mac. Цвета могут отличаться (светлая/тёмная тема) — главное, строка заканчивается на <code>%</code>.</p>
 
     <h3>Шаг 2. Установи Claude Code (основной путь)</h3>
     <p>Скопируй в терминал одну команду и нажми Enter. Установщик всё сделает сам, права администратора не нужны.</p>
@@ -61,7 +78,22 @@
     <h3>Шаг 5. Первая проверка</h3>
     <p>Прямо в открывшемся диалоге напиши:</p>
     <blockquote>Создай на рабочем столе файл заметка.txt со списком дел на завтра из трёх пунктов</blockquote>
-    <p>Агент спросит разрешение на создание файла — подтверди. Сходи на рабочий стол: файл там. Поздравляю, у тебя есть агент.</p>
+    <p>Агент спросит разрешение на создание файла — подтверди. Выглядит это примерно так:</p>
+
+    <div class="term">
+      <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="title">claude</span></div>
+      <div class="term-body"><span class="dim">&gt;</span> Создай на рабочем столе файл заметка.txt со списком дел на завтра из трёх пунктов
+
+<span class="acc">●</span> Создаю заметка.txt с тремя делами на завтра.
+
+  <strong>Create file</strong> <span class="dim">заметка.txt</span>
+  <span class="acc">❯ 1. Yes</span>
+    2. Yes, allow all edits during this session
+    3. No, and tell Claude what to do differently <span class="dim">(esc)</span></div>
+    </div>
+    <p class="term-caption">Иллюстрация. Обрати внимание: агент отвечает по-русски, а служебное меню разрешений — всегда по-английски. Нажми <code>Enter</code> на пункте <code>1. Yes</code> — это «да». Точный вид меню зависит от версии.</p>
+
+    <p>Сходи на рабочий стол: файл там. Поздравляю, у тебя есть агент.</p>
 
     <h3>Запасной путь (если шаг 2 не сработал)</h3>
     <p><strong>Windows:</strong></p>
