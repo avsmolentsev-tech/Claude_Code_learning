@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Рынок за час: офисная мебель в Казани</title>
+<title>Рынок за час: офисная мебель в Казани — глубокий разбор</title>
 <style>
 :root {
   --text: #171717; --text-2: #6B7280; --accent: #10A37F;
-  --line: #E5E7EB; --card: #F9FAFB; --amber: #F59E0B; --red: #EF4444;
+  --line: #E5E7EB; --card: #F9FAFB; --amber: #F59E0B; --red: #EF4444; --blue: #3B82F6;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
@@ -15,11 +15,13 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--text); backgrou
 header { padding: 48px 0 24px; border-bottom: 1px solid var(--line); margin-bottom: 40px; }
 h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 8px; }
 h2 { font-size: 1.5rem; font-weight: 600; margin: 48px 0 20px; }
+h3 { font-size: 1.125rem; font-weight: 600; margin: 28px 0 12px; }
 .muted { color: var(--text-2); }
 .note {
   background: var(--card); border: 1px solid var(--line); border-radius: 12px;
   padding: 14px 20px; font-size: 0.875rem; color: var(--text-2); margin: 16px 0 0;
 }
+.note.warn { border-color: var(--amber); background: #FFF9EE; }
 table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 0.9375rem; }
 th { text-align: left; padding: 12px 14px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase;
   letter-spacing: 0.05em; color: var(--text-2); border-bottom: 2px solid var(--line); vertical-align: bottom; }
@@ -32,12 +34,17 @@ th.we { color: var(--accent); }
 .tag.a { background: rgba(245,158,11,0.14); color: #92610A; }
 .tag.r { background: rgba(239,68,68,0.12); color: #B91C1C; }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.cards2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
-.card h3 { font-size: 1rem; margin-bottom: 8px; }
-.card p { font-size: 0.9rem; color: var(--text-2); }
+.card h3 { font-size: 1rem; margin: 0 0 10px; }
+.card p { font-size: 0.9rem; color: var(--text-2); margin-bottom: 8px; }
 .card .num { font-size: 1.4rem; font-weight: 600; color: var(--accent); display: block; margin-bottom: 6px; }
+.swot-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.swot-label.s { color: var(--accent); }
+.swot-label.w { color: var(--red); }
+.swot-label.o { color: var(--blue); }
 footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--line); color: var(--text-2); font-size: 0.875rem; }
-@media (max-width: 800px) { .cards { grid-template-columns: 1fr; } }
+@media (max-width: 800px) { .cards, .cards2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -45,14 +52,14 @@ footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--lin
 <header>
   <div class="container">
     <h1>Рынок за час: офисная мебель в Казани</h1>
-    <p class="muted">Разведка агентом по открытым сайтам · практикум М2 · 21.07.2026</p>
-    <div class="note">Учебная версия отчёта: конкуренты обезличены (А–Г). В рабочем файле ученика — реальные названия и ссылки на страницы-источники у каждой цифры. «Мы» — вымышленный магазин из сквозного примера курса.</div>
+    <p class="muted">Глубокий разбор агентом по открытым сайтам · практикум М2 · 21.07.2026</p>
+    <div class="note">Учебная версия: конкуренты обезличены (А–Г). Реальные названия и ссылки на страницы-источники — в рабочем файле ученика. «Мы» — вымышленный магазин из сквозного примера курса.</div>
   </div>
 </header>
 
 <div class="container">
 
-  <h2>Сравнительная таблица</h2>
+  <h2>Общее позиционирование</h2>
   <table>
     <tr>
       <th></th>
@@ -65,25 +72,17 @@ footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--lin
     <tr>
       <td><strong>Сегмент</strong></td>
       <td class="we">средний</td>
-      <td>от бюджета до премиума</td>
-      <td>средний и выше, крупные заказы</td>
+      <td>широкий: от бюджета до премиума</td>
+      <td>средний, позиционируется как премиум</td>
       <td>средний-высокий</td>
       <td>эконом</td>
-    </tr>
-    <tr>
-      <td><strong>Цены на сайте</strong></td>
-      <td class="we">открыто</td>
-      <td><span class="tag g">открыто</span> стулья от ~2 т.р., кабинеты 165+ т.р.</td>
-      <td><span class="tag r">по запросу</span> «гарантия лучшей цены»</td>
-      <td><span class="tag g">открыто</span> + скидки 10–50%</td>
-      <td><span class="tag g">открыто</span> столы от ~1,9 т.р., скидки до 63%</td>
     </tr>
     <tr>
       <td><strong>Главное обещание</strong></td>
       <td class="we">—</td>
       <td>бесплатный дизайн-проект, «офис под ключ», тест-драйв</td>
       <td>производитель, 100 000 моделей, гарантия до 10 лет, крупные клиенты</td>
-      <td>опыт («тысячи клиентов»), доставка за 1 день из наличия</td>
+      <td>24 года на рынке, доставка за 1 день из наличия</td>
       <td>«недорого», «приехал — оплатил — забрал»</td>
     </tr>
     <tr>
@@ -103,34 +102,116 @@ footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--lin
       <td>не заявлено</td>
     </tr>
   </table>
-  <p class="note">Правило практикума: каждая ячейка в рабочем файле — со ссылкой на страницу, где это написано. Агент может неверно прочитать цену или устаревшую акцию — проверяй, прежде чем принимать решения.</p>
+
+  <h2>Цены «в лоб»: два эталонных товара</h2>
+  <p class="muted">Правило разведки: сравнивать не «сегменты на глаз», а конкретные позиции из каталога. Ниже — реальные цены на базовый стол для персонала и базовое кресло, у каждого игрока.</p>
+
+  <h3>Стол для персонала (базовый)</h3>
+  <table>
+    <tr><th>Конкурент</th><th>Диапазон цен</th><th>Пример модели</th></tr>
+    <tr><td>А</td><td>3 964–42 893 ₽ <span class="muted">(типовые 5 700–9 600 ₽)</span></td><td>Стол прямой 120×60×76 — 6 450 ₽</td></tr>
+    <tr><td>Б</td><td>от 4 948 ₽</td><td>компьютерный стол, домашний офис</td></tr>
+    <tr><td>В</td><td>6 370–12 641 ₽</td><td>Стол персонала, белый — 6 370 ₽</td></tr>
+    <tr><td>Г</td><td>3 150–8 990 ₽</td><td>Письменный стол 1000×600 мм — 3 150 ₽</td></tr>
+  </table>
+
+  <h3>Кресло для персонала / оператора</h3>
+  <table>
+    <tr><th>Конкурент</th><th>Диапазон цен</th><th>Пример модели</th></tr>
+    <tr><td>А</td><td>4 009–22 263 ₽</td><td>Lark — 4 009 ₽</td></tr>
+    <tr><td>Б</td><td>4 221–16 038 ₽</td><td>Терра лайт — 4 221 ₽</td></tr>
+    <tr><td>В</td><td>5 261–11 883 ₽</td><td>CHAIRMAN 696 LT — 5 261 ₽</td></tr>
+    <tr><td>Г</td><td>4 650–8 450 ₽ <span class="muted">(оператор/руководитель)</span></td><td>Кресло оператора — 4 650 ₽</td></tr>
+  </table>
+  <div class="note">Наблюдение: по входной цене все четыре игрока стартуют в схожем коридоре (4–6,5 тыс. ₽ за базовые позиции). Разница — в потолке ассортимента: у А и Б он уходит в 20+ тыс. ₽ за кресло, у Г — почти нет дорогих позиций вовсе.</div>
+
+  <div class="note warn">
+    <strong>⚠️ Честная поправка.</strong> Первый (беглый) проход по главным страницам дал две неверные цифры: конкурент Б выглядел так, будто «цены только по запросу» — на деле в каталоге цены открыты. У конкурента Г с главной страницы показалось, что кресла стоят 20–42 тыс. ₽ — реальный каталог показал 4,6–8,5 тыс. ₽, то есть Г внезапно оказался самым дешёвым, а не сопоставимым с премиумом. Обе ошибки нашлись только при переходе в конкретный товарный раздел. <strong>Вывод: главная страница — это маркетинг, каталог — это данные.</strong>
+  </div>
+
+  <h2>Карта позиционирования</h2>
+  <p class="muted">Качественная оценка (не строгие данные): по горизонтали — уровень цен от входа до потолка ассортимента, по вертикали — насыщенность сервисных обещаний (проект, гарантия, доставка, тендеры, известность).</p>
+  <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;margin:0 auto">
+    <line x1="60" y1="20" x2="60" y2="370" stroke="#E5E7EB" stroke-width="2"/>
+    <line x1="60" y1="370" x2="650" y2="370" stroke="#E5E7EB" stroke-width="2"/>
+    <text x="355" y="405" text-anchor="middle" font-family="Inter" font-size="13" fill="#6B7280">Цена (вход → потолок ассортимента)</text>
+    <text x="25" y="195" text-anchor="middle" font-family="Inter" font-size="13" fill="#6B7280" transform="rotate(-90 25 195)">Сервисные обещания</text>
+
+    <circle cx="272" cy="222" r="16" fill="#10A37F"/>
+    <text x="272" y="252" text-anchor="middle" font-family="Inter" font-size="13" font-weight="700" fill="#171717">А</text>
+
+    <circle cx="272" cy="72" r="16" fill="#3B82F6"/>
+    <text x="272" y="102" text-anchor="middle" font-family="Inter" font-size="13" font-weight="700" fill="#171717">Б</text>
+
+    <circle cx="390" cy="147" r="16" fill="#F59E0B"/>
+    <text x="390" y="177" text-anchor="middle" font-family="Inter" font-size="13" font-weight="700" fill="#171717">В</text>
+
+    <circle cx="155" cy="297" r="16" fill="#EF4444"/>
+    <text x="155" y="327" text-anchor="middle" font-family="Inter" font-size="13" font-weight="700" fill="#171717">Г</text>
+
+    <rect x="470" y="240" width="150" height="90" rx="10" fill="#F9FAFB" stroke="#E5E7EB"/>
+    <text x="485" y="262" font-family="Inter" font-size="12" font-weight="700" fill="#171717">Пустая зона:</text>
+    <text x="485" y="280" font-family="Inter" font-size="11" fill="#6B7280">средняя цена +</text>
+    <text x="485" y="295" font-family="Inter" font-size="11" fill="#6B7280">внятное обещание</text>
+    <text x="485" y="310" font-family="Inter" font-size="11" fill="#6B7280">без «производителя</text>
+    <text x="485" y="323" font-family="Inter" font-size="11" fill="#6B7280">на миллион моделей»</text>
+  </svg>
+  <div class="note">Заметен разрыв: вверху — федеральные игроки с большим набором обещаний (Б, отчасти А), внизу — эконом без затей (Г). Середина карты (умеренная цена + понятное, но не «федеральное» обещание) — свободнее, чем края.</div>
+
+  <h2>Сильные и слабые стороны каждого</h2>
+  <div class="cards2">
+    <div class="card">
+      <h3>Конкурент А</h3>
+      <p><span class="swot-label s">Сильное:</span> широта каталога и диапазон цен закрывает любой чек.</p>
+      <p><span class="swot-label w">Слабое:</span> без явного УТП — «всё для всех» размывает позиционирование.</p>
+      <p><span class="swot-label o">Для нас:</span> конкурировать ассортиментом бессмысленно — искать нишу внутри диапазона.</p>
+    </div>
+    <div class="card">
+      <h3>Конкурент Б</h3>
+      <p><span class="swot-label s">Сильное:</span> доверие через масштаб (60+ салонов, известные клиенты, гарантия 10 лет).</p>
+      <p><span class="swot-label w">Слабое:</span> маркетинг главной страницы обещает больше, чем видно сразу — «цены по запросу» отпугивает часть аудитории, которая не дойдёт до каталога.</p>
+      <p><span class="swot-label o">Для нас:</span> открыто показывать цены — простое преимущество против их же маркетинговой ошибки.</p>
+    </div>
+    <div class="card">
+      <h3>Конкурент В</h3>
+      <p><span class="swot-label s">Сильное:</span> скорость (доставка за 1 день из наличия) и возраст бренда как аргумент доверия.</p>
+      <p><span class="swot-label w">Слабое:</span> цены на входе выше конкурентов — уязвимы в самом чувствительном сегменте (малый бизнес, экономящий на столах).</p>
+      <p><span class="swot-label o">Для нас:</span> демпинговать именно во входной категории столов.</p>
+    </div>
+    <div class="card">
+      <h3>Конкурент Г</h3>
+      <p><span class="swot-label s">Сильное:</span> реально самый дешёвый вариант, прозрачные цены.</p>
+      <p><span class="swot-label w">Слабое:</span> почти нет сервисных обещаний — воспринимается как «магазин», а не «партнёр для офиса».</p>
+      <p><span class="swot-label o">Для нас:</span> если целимся не в демпинг, а в средний+ чек — Г не конкурент вовсе, а ценовой якорь снизу.</p>
+    </div>
+  </div>
 
   <h2>Что ищут люди (Вордстат)</h2>
-  <div class="note" style="border-color: var(--amber);">Этот раздел заполняется на занятии руками: Вордстат требует входа в Яндекс. Ученик снимает частотности по 5–7 запросам ниши («офисная мебель казань», «стол офисный купить», «кресло руководителя»...), агент помогает интерпретировать: что ищут чаще — «дёшево» или «под ключ», по каким словам продвигаются конкуренты.</div>
+  <div class="note warn">Раздел заполняется на занятии руками: Вордстат требует входа в Яндекс. Гипотеза для проверки: сравнить частотность «офисная мебель недорого» vs «офис под ключ» — это покажет, какая из двух позиций (Г vs Б/В) ближе к реальному спросу.</div>
 
-  <h2>Три вывода для «нас»</h2>
+  <h2>Выводы для «нас»</h2>
   <div class="cards">
     <div class="card">
       <span class="num">1</span>
-      <h3>Ниша поляризована</h3>
-      <p>Внизу — «недорого, забирай сразу» (Г), вверху — «офис под ключ с дизайн-проектом» (А, Б). Середина без внятного обещания — там сейчас «мы». Надо выбрать сторону или сформулировать своё.</p>
+      <h3>Входная цена — не поле для борьбы</h3>
+      <p>Все четыре игрока стартуют в схожем узком коридоре 4–6,5 тыс. ₽ за базовые позиции. Конкурировать демпингом на входе бессмысленно — маржи там уже нет ни у кого.</p>
     </div>
     <div class="card">
       <span class="num">2</span>
-      <h3>Дизайн-проект стал гигиеной</h3>
-      <p>Бесплатный проект обещают трое из четырёх. Если у «нас» его нет — мы проигрываем до разговора о цене. Если есть — это уже не преимущество, а входной билет.</p>
+      <h3>Середина карты свободнее краёв</h3>
+      <p>Умеренная цена + понятное (но не «федеральное») обещание — зона с меньшей конкуренцией, чем полюса «федеральный производитель» и «эконом-магазин».</p>
     </div>
     <div class="card">
       <span class="num">3</span>
-      <h3>Тендеры — заметный канал</h3>
-      <p>Двое из четырёх открыто работают с госзакупками. Для «нас» это либо канал роста, либо объяснение, куда уходят крупные заказы. Смыкается с темой М7 (тендерный агент).</p>
+      <h3>Проверяй каталог, а не главную</h3>
+      <p>Две из четырёх карточек конкурентов в первом проходе содержали ошибку именно из-за чтения главной страницы вместо каталога. Это не разовая случайность — это системный риск любой быстрой разведки.</p>
     </div>
   </div>
 
 </div>
 
 <footer>
-  <div class="container">Отчёт собран ИИ-агентом за один час по открытым страницам · Иллюстрация к практикуму М2 «Анализ конкурентов и рынка» · Данные могут устареть — перепроверяй перед решениями</div>
+  <div class="container">Отчёт собран ИИ-агентом за один час по открытым страницам (два прохода: быстрый + глубокий) · Иллюстрация к практикуму М2 «Анализ конкурентов и рынка» · Цены могут устареть — перепроверяй перед решениями</div>
 </footer>
 
 </body>
