@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1080px; height:1080px; font-family:'Inter',system-ui,sans-serif; background:#0E3B30; position:relative; overflow:hidden; }
+.wrap { padding:90px; height:100%; display:flex; flex-direction:column; justify-content:center; }
+.eyebrow { color:#4FD8B0; font-size:26px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:30px; }
+h1 { color:#fff; font-size:80px; font-weight:700; line-height:1.15; }
+.swipe { position:absolute; bottom:70px; right:90px; color:#5E9C8A; font-size:26px; }
+.dots { position:absolute; bottom:75px; left:90px; display:flex; gap:10px; }
+.dot { width:10px; height:10px; border-radius:50%; background:#2A5C4E; }
+.dot.active { background:#4FD8B0; }
+</style></head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Карусель · слайд 1/5</div>
+  <h1>5 вещей, о которых молчат в прайсах на мебель</h1>
+</div>
+<div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+<div class="swipe">листайте →</div>
+</body></html>
