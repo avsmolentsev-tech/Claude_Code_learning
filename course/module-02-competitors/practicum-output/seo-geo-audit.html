@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>СЕО/ГЕО-аудит: офисная мебель в Казани</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
 :root {
   --text: #171717; --text-2: #6B7280; --accent: #10A37F;
@@ -30,6 +31,10 @@ tr:hover { background: var(--card); }
 .pill.good { background: rgba(16,163,127,0.12); color: #0B7A61; }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .cards2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.charts2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+.chart-card { border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.chart-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 14px; }
+@media (max-width: 800px) { .charts2 { grid-template-columns: 1fr; } }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
 .card h3 { font-size: 1rem; margin: 0 0 10px; }
 .card p { font-size: 0.9rem; color: var(--text-2); margin-bottom: 8px; }
@@ -101,6 +106,17 @@ footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--lin
   </table>
   <div class="note warn"><strong>Находка:</strong> у половины (ДЭФО и Азамат-Мебель) — <strong>ни одного тега H1</strong> на главной странице. Это базовая ошибка, но она встречается даже у игроков с многолетним присутствием на рынке — проверка на глаз с этим не справляется, а скрипт находит за секунду.</div>
 
+  <div class="charts2">
+    <div class="chart-card">
+      <h3>Проблем найдено на сайте</h3>
+      <canvas id="chartIssues"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Картинки без alt-текста</h3>
+      <canvas id="chartAlt"></canvas>
+    </div>
+  </div>
+
   <h2>Сравнение: скорость загрузки (реальные замеры браузером)</h2>
   <table>
     <tr><th>Сайт</th><th>Ответ сервера (TTFB)</th><th>Страница готова (domReady)</th></tr>
@@ -110,6 +126,11 @@ footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--lin
     <tr><td>Азамат-Мебель</td><td><span class="pill bad">700 мс</span></td><td><span class="pill bad">1673 мс</span></td></tr>
   </table>
   <div class="note">Азамат-Мебель медленнее остальных в 3–9 раз по ответу сервера. В сочетании с отсутствием H1 и schema — картина игрока, который выигрывает ценой, но проигрывает в цифровом исполнении.</div>
+
+  <div class="chart-card" style="margin:20px 0">
+    <h3>Скорость загрузки, мс (реальные замеры)</h3>
+    <canvas id="chartSpeed"></canvas>
+  </div>
 
   <h2>Готовность к ИИ-поиску (ГЕО)</h2>
   <table>
@@ -150,6 +171,43 @@ footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--lin
 <footer>
   <div class="container">Отчёт собран ИИ-агентом: реальное сканирование 4 сайтов Python-скриптом + замеры скорости headless-браузером · Иллюстрация к практикуму М2-02 «СЕО/ГЕО-аудит» · Данные могут устареть — сайты меняются, перепроверяй перед решениями</div>
 </footer>
+
+<script>
+const sites = ["ДЭФО", "Феликс", "Евроофис", "Азамат-Мебель"];
+const chartColors = { primary: '#10A37F', secondary: '#3B82F6', amber: '#F59E0B', red: '#EF4444', grid: '#E5E7EB', text: '#6B7280' };
+const chartDefaults = {
+  responsive: true,
+  plugins: { legend: { labels: { font: { family: 'Inter, system-ui', size: 12 }, color: '#6B7280', usePointStyle: true } } },
+  scales: {
+    x: { grid: { display: false }, ticks: { color: '#6B7280', font: { size: 11 } } },
+    y: { grid: { color: '#E5E7EB' }, ticks: { color: '#6B7280', font: { size: 11 } }, beginAtZero: true }
+  }
+};
+
+new Chart(document.getElementById('chartIssues'), {
+  type: 'bar',
+  data: { labels: sites, datasets: [{ label: 'Проблем найдено', data: [4, 2, 1, 3], backgroundColor: [chartColors.red, chartColors.amber, chartColors.primary, chartColors.red], borderRadius: 6 }] },
+  options: { ...chartDefaults, plugins: { legend: { display: false } } }
+});
+
+new Chart(document.getElementById('chartAlt'), {
+  type: 'bar',
+  data: { labels: sites, datasets: [{ label: '% картинок без alt', data: [47, 20, 3, 40], backgroundColor: chartColors.secondary, borderRadius: 6 }] },
+  options: { ...chartDefaults, plugins: { legend: { display: false } } }
+});
+
+new Chart(document.getElementById('chartSpeed'), {
+  type: 'bar',
+  data: {
+    labels: sites,
+    datasets: [
+      { label: 'Ответ сервера (TTFB)', data: [74, 147, 215, 700], backgroundColor: chartColors.primary, borderRadius: 6 },
+      { label: 'Страница готова (domReady)', data: [954, 1031, 1079, 1673], backgroundColor: chartColors.secondary, borderRadius: 6 }
+    ]
+  },
+  options: { ...chartDefaults, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Inter, system-ui', size: 12 }, color: '#6B7280', usePointStyle: true, padding: 16 } } } }
+});
+</script>
 
 </body>
 </html>
