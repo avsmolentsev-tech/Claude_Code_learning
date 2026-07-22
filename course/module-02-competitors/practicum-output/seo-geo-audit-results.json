@@ -1,0 +1,196 @@
+[
+  {
+    "url": "https://kazan.defo.ru/",
+    "page": {
+      "url": "https://kazan.defo.ru/",
+      "ok": true,
+      "status_code": 200,
+      "title": "Офисная мебель в Казани - купить мебель для офиса недорого в каталоге ТМ ДЭФО",
+      "title_len": 77,
+      "meta_description": "Мебель для офиса в магазине «ДЭФО» в Казани обладает широким ассортиментом. У нас можно купить офисную мебель для персонала, руководителей, переговорных. Доставка по всей России.",
+      "meta_description_len": 178,
+      "canonical": "https://kazan.defo.ru/",
+      "mobile_viewport": true,
+      "h1_count": 0,
+      "h1_sample": [],
+      "images_total": 160,
+      "images_missing_alt": 76,
+      "schema_types": [],
+      "links_internal": 693,
+      "links_external": 48,
+      "lang": "ru"
+    },
+    "robots": {
+      "url": "https://kazan.defo.ru/robots.txt",
+      "found": true,
+      "bots": {
+        "GPTBot": "разрешено (или частично) (по правилу *)",
+        "ChatGPT-User": "разрешено (или частично) (по правилу *)",
+        "ClaudeBot": "разрешено (или частично) (по правилу *)",
+        "anthropic-ai": "разрешено (или частично) (по правилу *)",
+        "Claude-Web": "разрешено (или частично) (по правилу *)",
+        "PerplexityBot": "разрешено (или частично) (по правилу *)",
+        "Google-Extended": "разрешено (или частично) (по правилу *)",
+        "CCBot": "разрешено (или частично) (по правилу *)",
+        "Applebot-Extended": "разрешено (или частично) (по правилу *)"
+      },
+      "sitemap": "https://kazan.defo.ru/sitemap.xml"
+    },
+    "llms_txt": {
+      "url": "https://kazan.defo.ru/llms.txt",
+      "found": false
+    },
+    "issues": [
+      "title длиннее 60 симв. — обрежется в поиске",
+      "нет H1",
+      "76 картинок без alt",
+      "нет структурированных данных (schema.org)"
+    ]
+  },
+  {
+    "url": "https://kazan.felix.ru/",
+    "page": {
+      "url": "https://kazan.felix.ru/",
+      "ok": true,
+      "status_code": 200,
+      "title": "Офисная мебель от производителя в Казани - купить мебель для офиса с доставкой в интернет-магазине felix.ru",
+      "title_len": 107,
+      "meta_description": "Компания «Феликс» — основной производитель и продавец офисной мебели и мебели для гостиниц в РФ. Свыше 100 000 наименований офисной и гостиничной мебели и аксессуаров с доставкой по России.",
+      "meta_description_len": 189,
+      "canonical": "https://kazan.felix.ru/",
+      "mobile_viewport": true,
+      "h1_count": 1,
+      "h1_sample": [
+        "Офисная мебель от производителя"
+      ],
+      "images_total": 64,
+      "images_missing_alt": 13,
+      "schema_types": [
+        "Organization"
+      ],
+      "links_internal": 320,
+      "links_external": 37,
+      "lang": "ru"
+    },
+    "robots": {
+      "url": "https://kazan.felix.ru/robots.txt",
+      "found": true,
+      "bots": {
+        "GPTBot": "разрешено (или частично) (по правилу *)",
+        "ChatGPT-User": "разрешено (или частично) (по правилу *)",
+        "ClaudeBot": "разрешено (или частично) (по правилу *)",
+        "anthropic-ai": "разрешено (или частично) (по правилу *)",
+        "Claude-Web": "разрешено (или частично) (по правилу *)",
+        "PerplexityBot": "разрешено (или частично) (по правилу *)",
+        "Google-Extended": "разрешено (или частично) (по правилу *)",
+        "CCBot": "разрешено (или частично) (по правилу *)",
+        "Applebot-Extended": "разрешено (или частично) (по правилу *)"
+      },
+      "sitemap": "https://kazan.felix.ru/sitemap.xml"
+    },
+    "llms_txt": {
+      "url": "https://kazan.felix.ru/llms.txt",
+      "found": false
+    },
+    "issues": [
+      "title длиннее 60 симв. — обрежется в поиске",
+      "13 картинок без alt"
+    ]
+  },
+  {
+    "url": "https://www.eo-kazan.ru/",
+    "page": {
+      "url": "https://www.eo-kazan.ru/",
+      "ok": true,
+      "status_code": 200,
+      "title": "Офисная мебель в Казани от Евроофис, купить мебель для офиса",
+      "title_len": 60,
+      "meta_description": "Большой ассортимент офисной мебели в Казани в наличии и со скидками до -50%. Современная и практичная мебель в Ваш офис! Новый каталог 2026 года. Бесплатная разработка дизайна, доставка, сборка, гарантия, постгарантийное обслуживание, выезд на замер менеджера. Выгодные цены от производителя.",
+      "meta_description_len": 292,
+      "canonical": "https://www.eo-kazan.ru/",
+      "mobile_viewport": true,
+      "h1_count": 1,
+      "h1_sample": [
+        "Офисная мебель"
+      ],
+      "images_total": 116,
+      "images_missing_alt": 4,
+      "schema_types": [
+        "Organization"
+      ],
+      "links_internal": 560,
+      "links_external": 35,
+      "lang": "ru"
+    },
+    "robots": {
+      "url": "https://www.eo-kazan.ru/robots.txt",
+      "found": true,
+      "bots": {
+        "GPTBot": "разрешено (или частично) (по правилу *)",
+        "ChatGPT-User": "разрешено (или частично) (по правилу *)",
+        "ClaudeBot": "разрешено (или частично) (по правилу *)",
+        "anthropic-ai": "разрешено (или частично) (по правилу *)",
+        "Claude-Web": "разрешено (или частично) (по правилу *)",
+        "PerplexityBot": "разрешено (или частично) (по правилу *)",
+        "Google-Extended": "разрешено (или частично) (по правилу *)",
+        "CCBot": "разрешено (или частично) (по правилу *)",
+        "Applebot-Extended": "разрешено (или частично) (по правилу *)"
+      },
+      "sitemap": null
+    },
+    "llms_txt": {
+      "url": "https://www.eo-kazan.ru/llms.txt",
+      "found": false
+    },
+    "issues": [
+      "4 картинок без alt"
+    ]
+  },
+  {
+    "url": "https://azamat-mebel.ru/",
+    "page": {
+      "url": "https://azamat-mebel.ru/",
+      "ok": true,
+      "status_code": 200,
+      "title": "Офисная мебель недорого в Казани. Производство Азамат-Мебель",
+      "title_len": 60,
+      "meta_description": "Азамат-Мебель интернет магазин г.Казань. Всегда в наличии недорого офисная мебель для персонала. У нас можно дешево купить столы письменные, стулья кресла и шкафы для  сотрудников. Мы производим серийную мебель, а также мебель на заказ по размерам клиента. Большое количества мебели в наличии. Срочная доставка и сборка мебели в день заявки.",
+      "meta_description_len": 341,
+      "canonical": "https://azamat-mebel.ru/",
+      "mobile_viewport": true,
+      "h1_count": 0,
+      "h1_sample": [],
+      "images_total": 98,
+      "images_missing_alt": 39,
+      "schema_types": [],
+      "links_internal": 284,
+      "links_external": 10,
+      "lang": "ru"
+    },
+    "robots": {
+      "url": "https://azamat-mebel.ru/robots.txt",
+      "found": true,
+      "bots": {
+        "GPTBot": "разрешено (или частично) (по правилу *)",
+        "ChatGPT-User": "разрешено (или частично) (по правилу *)",
+        "ClaudeBot": "разрешено (или частично) (по правилу *)",
+        "anthropic-ai": "разрешено (или частично) (по правилу *)",
+        "Claude-Web": "разрешено (или частично) (по правилу *)",
+        "PerplexityBot": "разрешено (или частично) (по правилу *)",
+        "Google-Extended": "разрешено (или частично) (по правилу *)",
+        "CCBot": "разрешено (или частично) (по правилу *)",
+        "Applebot-Extended": "разрешено (или частично) (по правилу *)"
+      },
+      "sitemap": null
+    },
+    "llms_txt": {
+      "url": "https://azamat-mebel.ru/llms.txt",
+      "found": false
+    },
+    "issues": [
+      "нет H1",
+      "39 картинок без alt",
+      "нет структурированных данных (schema.org)"
+    ]
+  }
+]
