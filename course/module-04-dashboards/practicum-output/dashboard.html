@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дашборд продаж — интерактивный</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+:root {
+  --text: #171717; --text-2: #6B7280; --accent: #10A37F; --accent-hover:#0D8C6D;
+  --line: #E5E7EB; --card: #F9FAFB; --amber: #F59E0B; --red: #EF4444; --blue: #3B82F6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.5; }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+header { padding: 32px 0 20px; border-bottom: 1px solid var(--line); margin-bottom: 32px; display:flex; justify-content:space-between; align-items:center; }
+h1 { font-size: 1.5rem; font-weight: 600; }
+.muted { color: var(--text-2); font-size:0.875rem; }
+.layout { display: grid; grid-template-columns: 260px 1fr; gap: 28px; padding-bottom: 60px; }
+.filters { border: 1px solid var(--line); border-radius: 12px; padding: 20px; align-self: start; position: sticky; top: 20px; }
+.filters h3 { font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2); margin-bottom: 12px; }
+.filter-group { margin-bottom: 24px; }
+.filter-group label { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; margin-bottom: 8px; cursor: pointer; }
+.filter-group input[type=checkbox] { accent-color: var(--accent); width:16px; height:16px; }
+.reset-btn { width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font-size: 0.8125rem; color: var(--text-2); cursor: pointer; }
+.reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+.kpi .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2); margin-bottom: 6px; }
+.kpi .value { font-size: 1.6rem; font-weight: 600; color: var(--accent); transition: opacity 0.15s; }
+.charts-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; margin-bottom: 20px; }
+.chart-card { border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.chart-card h3 { font-size: 0.95rem; margin-bottom: 14px; }
+.chart-card .hint { font-size:0.75rem; color:var(--text-2); margin-top:8px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+th { text-align: left; padding: 10px 12px; font-weight: 600; font-size: 0.7rem; text-transform: uppercase; color: var(--text-2); border-bottom: 2px solid var(--line); position:sticky; top:0; background:#fff; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); }
+tr:hover td { background: var(--card); }
+.table-wrap { border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; max-height: 320px; overflow-y: auto; }
+.empty { text-align:center; padding: 40px; color: var(--text-2); font-size:0.875rem; }
+.status-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
+    <div>
+      <h1>Дашборд продаж</h1>
+      <p class="muted">demo-orders.csv · январь–июнь 2026 · клик по столбцу месяца тоже фильтрует</p>
+    </div>
+    <button class="reset-btn" style="width:auto;padding:10px 18px" id="resetBtn">Сбросить фильтры</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="layout">
+    <aside class="filters">
+      <h3>Месяц</h3>
+      <div class="filter-group" id="monthFilters"></div>
+      <h3>Статус</h3>
+      <div class="filter-group" id="statusFilters"></div>
+      <h3>Клиент</h3>
+      <div class="filter-group" id="clientFilters"></div>
+    </aside>
+
+    <main>
+      <div class="kpis">
+        <div class="kpi"><div class="label">Заказов</div><div class="value" id="kpiOrders">0</div></div>
+        <div class="kpi"><div class="label">Выручка</div><div class="value" id="kpiRevenue">0 ₽</div></div>
+        <div class="kpi"><div class="label">Средний чек</div><div class="value" id="kpiAvg">0 ₽</div></div>
+        <div class="kpi"><div class="label">Клиентов</div><div class="value" id="kpiClients">0</div></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3>Выручка по месяцам</h3>
+          <canvas id="chartMonth" height="180"></canvas>
+          <div class="hint">Клик по столбцу — фильтр по этому месяцу</div>
+        </div>
+        <div class="chart-card">
+          <h3>Топ клиентов</h3>
+          <canvas id="chartClients" height="180"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:20px">
+        <h3>Заказы (отфильтровано: <span id="rowCount">0</span>)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Дата</th><th>Клиент</th><th>Товар</th><th>Кол-во</th><th>Сумма</th><th>Статус</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const RAW = [
+["2026-01-05","ООО \"Ромашка\"","Кресло офисное",2,15000,30000,"Оплачен"],
+["2026-01-12","ИП Петров","Стол письменный",1,25000,25000,"Оплачен"],
+["2026-01-18","ООО \"Звезда\"","Шкаф-купе",1,45000,45000,"Доставка"],
+["2026-01-22","Козлова А.И.","Стул барный",4,8000,32000,"Оплачен"],
+["2026-01-28","ИП Сидоров","Диван угловой",1,65000,65000,"Новый"],
+["2026-02-03","ООО \"Луч\"","Тумба прикроватная",3,12000,36000,"Оплачен"],
+["2026-02-10","ООО \"Вектор\"","Стол переговорный",1,55000,55000,"Оплачен"],
+["2026-02-15","Новиков Д.С.","Полка настенная",5,5000,25000,"Оплачен"],
+["2026-02-20","ООО \"Ромашка\"","Кресло офисное",1,15000,15000,"Оплачен"],
+["2026-02-25","ИП Петров","Диван угловой",1,65000,65000,"Отменён"],
+["2026-03-02","ООО \"Звезда\"","Стул барный",6,8000,48000,"Оплачен"],
+["2026-03-08","Козлова А.И.","Полка настенная",2,5000,10000,"Доставка"],
+["2026-03-14","ИП Сидоров","Стол письменный",2,25000,50000,"Оплачен"],
+["2026-03-20","ООО \"Луч\"","Шкаф-купе",1,45000,45000,"Оплачен"],
+["2026-03-25","ООО \"Вектор\"","Кресло офисное",3,15000,45000,"Оплачен"],
+["2026-04-01","Новиков Д.С.","Стол переговорный",1,55000,55000,"Новый"],
+["2026-04-07","ООО \"Ромашка\"","Тумба прикроватная",2,12000,24000,"Оплачен"],
+["2026-04-13","ИП Петров","Полка настенная",8,5000,40000,"Оплачен"],
+["2026-04-18","ООО \"Звезда\"","Кресло офисное",4,15000,60000,"Отменён"],
+["2026-04-24","Козлова А.И.","Стол письменный",1,25000,25000,"Оплачен"],
+["2026-05-01","ИП Сидоров","Стул барный",3,8000,24000,"Доставка"],
+["2026-05-08","ООО \"Луч\"","Диван угловой",1,65000,65000,"Оплачен"],
+["2026-05-14","ООО \"Вектор\"","Полка настенная",6,5000,30000,"Оплачен"],
+["2026-05-20","Новиков Д.С.","Шкаф-купе",1,45000,45000,"Оплачен"],
+["2026-05-26","ООО \"Ромашка\"","Стол переговорный",1,55000,55000,"Новый"],
+["2026-06-01","ИП Петров","Кресло офисное",2,15000,30000,"Оплачен"],
+["2026-06-07","ООО \"Звезда\"","Тумба прикроватная",1,12000,12000,"Оплачен"],
+["2026-06-13","Козлова А.И.","Диван угловой",1,65000,65000,"Доставка"],
+["2026-06-19","ИП Сидоров","Полка настенная",4,5000,20000,"Отменён"],
+["2026-06-25","ООО \"Луч\"","Стул барный",5,8000,40000,"Оплачен"],
+].map(r => ({date:r[0], month:r[0].slice(0,7), client:r[1], product:r[2], qty:r[3], price:r[4], total:r[5], status:r[6]}));
+
+const MONTHS = [...new Set(RAW.map(r=>r.month))].sort();
+const STATUSES = ["Оплачен","Доставка","Новый","Отменён"];
+const CLIENTS = [...new Set(RAW.map(r=>r.client))].sort();
+const STATUS_COLOR = {"Оплачен":"#10A37F","Доставка":"#F59E0B","Новый":"#3B82F6","Отменён":"#EF4444"};
+
+const state = { months: new Set(MONTHS), statuses: new Set(STATUSES), clients: new Set(CLIENTS) };
+
+function buildFilters() {
+  const monthNames = {"01":"Январь","02":"Февраль","03":"Март","04":"Апрель","05":"Май","06":"Июнь"};
+  document.getElementById('monthFilters').innerHTML = MONTHS.map(m => {
+    const label = monthNames[m.slice(5,7)] || m;
+    return `<label><input type="checkbox" data-type="month" value="${m}" checked> ${label}</label>`;
+  }).join('');
+  document.getElementById('statusFilters').innerHTML = STATUSES.map(s =>
+    `<label><input type="checkbox" data-type="status" value="${s}" checked> <span class="status-dot" style="background:${STATUS_COLOR[s]}"></span>${s}</label>`
+  ).join('');
+  document.getElementById('clientFilters').innerHTML = CLIENTS.map(c =>
+    `<label><input type="checkbox" data-type="client" value="${c}" checked> ${c}</label>`
+  ).join('');
+
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const type = e.target.dataset.type, val = e.target.value;
+      const set = state[type + 'es'] || state[type + 's'];
+      if (e.target.checked) set.add(val); else set.delete(val);
+      render();
+    });
+  });
+}
+
+function filtered() {
+  return RAW.filter(r => state.months.has(r.month) && state.statuses.has(r.status) && state.clients.has(r.client));
+}
+
+let chartMonth, chartClients;
+const chartDefaults = {
+  responsive: true,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { grid: { display: false }, ticks: { color: '#6B7280', font: { size: 11 } } },
+    y: { grid: { color: '#E5E7EB' }, ticks: { color: '#6B7280', font: { size: 11 } }, beginAtZero: true }
+  }
+};
+
+function fmt(n) { return n.toLocaleString('ru-RU') + ' ₽'; }
+
+function render() {
+  const rows = filtered();
+  const paid = rows.filter(r => r.status !== 'Отменён');
+
+  document.getElementById('kpiOrders').textContent = rows.length;
+  document.getElementById('kpiRevenue').textContent = fmt(paid.reduce((s,r)=>s+r.total,0));
+  document.getElementById('kpiAvg').textContent = paid.length ? fmt(Math.round(paid.reduce((s,r)=>s+r.total,0)/paid.length)) : '0 ₽';
+  document.getElementById('kpiClients').textContent = new Set(rows.map(r=>r.client)).size;
+  document.getElementById('rowCount').textContent = rows.length;
+
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = rows.length ? rows.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(r => `
+    <tr>
+      <td>${r.date}</td><td>${r.client}</td><td>${r.product}</td><td>${r.qty}</td>
+      <td>${fmt(r.total)}</td>
+      <td><span class="status-dot" style="background:${STATUS_COLOR[r.status]}"></span>${r.status}</td>
+    </tr>`).join('') : '<tr><td colspan="6" class="empty">Нет заказов под текущие фильтры</td></tr>';
+
+  const monthNames = {"01":"Янв","02":"Фев","03":"Мар","04":"Апр","05":"Май","06":"Июн"};
+  const revByMonth = MONTHS.map(m => paid.filter(r=>r.month===m).reduce((s,r)=>s+r.total,0));
+  const monthLabels = MONTHS.map(m => monthNames[m.slice(5,7)]);
+  const monthColors = MONTHS.map(m => state.months.has(m) ? '#10A37F' : '#E5E7EB');
+
+  if (chartMonth) chartMonth.destroy();
+  chartMonth = new Chart(document.getElementById('chartMonth'), {
+    type: 'bar',
+    data: { labels: monthLabels, datasets: [{ data: revByMonth, backgroundColor: monthColors, borderRadius: 6 }] },
+    options: { ...chartDefaults, onClick: (evt, els) => {
+      if (!els.length) return;
+      const m = MONTHS[els[0].index];
+      document.querySelectorAll('input[data-type=month]').forEach(cb => {
+        cb.checked = cb.value === m;
+        if (cb.checked) state.months.add(cb.value); else state.months.delete(cb.value);
+      });
+      render();
+    }}
+  });
+
+  const byClient = {};
+  paid.forEach(r => byClient[r.client] = (byClient[r.client]||0) + r.total);
+  const topClients = Object.entries(byClient).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+  if (chartClients) chartClients.destroy();
+  chartClients = new Chart(document.getElementById('chartClients'), {
+    type: 'bar',
+    data: { labels: topClients.map(c=>c[0]), datasets: [{ data: topClients.map(c=>c[1]), backgroundColor: '#3B82F6', borderRadius: 6 }] },
+    options: { ...chartDefaults, indexAxis: 'y' }
+  });
+}
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  state.months = new Set(MONTHS); state.statuses = new Set(STATUSES); state.clients = new Set(CLIENTS);
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = true);
+  render();
+});
+
+buildFilters();
+render();
+</script>
+
+</body>
+</html>
