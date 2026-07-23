@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Обезличиватель CSV — данные не покидают браузер</title>
+<style>
+:root {
+  --text:#171717; --text-2:#6B7280; --accent:#10A37F; --accent-hover:#0D8C6D;
+  --line:#E5E7EB; --card:#F9FAFB; --amber:#F59E0B;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Inter',system-ui,sans-serif; color:var(--text); background:#fff; line-height:1.6; }
+.container { max-width:920px; margin:0 auto; padding:0 24px; }
+header { padding:40px 0 24px; border-bottom:1px solid var(--line); margin-bottom:32px; }
+h1 { font-size:1.7rem; font-weight:700; margin-bottom:8px; }
+.muted { color:var(--text-2); }
+h2 { font-size:1.15rem; font-weight:700; margin:32px 0 14px; }
+.note { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 20px; font-size:0.875rem; color:var(--text-2); margin-bottom:24px; }
+.note.good { border-color:var(--accent); background:#EEFBF6; }
+.dropzone { border:2px dashed var(--line); border-radius:14px; padding:40px; text-align:center; color:var(--text-2); cursor:pointer; transition:border-color .15s; }
+.dropzone.drag { border-color:var(--accent); background:rgba(16,163,127,0.05); }
+.dropzone strong { color:var(--accent); }
+input[type=file] { display:none; }
+.cols { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 24px; }
+.col-chip { border:1px solid var(--line); border-radius:8px; padding:8px 14px; font-size:0.875rem; cursor:pointer; display:flex; align-items:center; gap:8px; user-select:none; }
+.col-chip input { accent-color:var(--accent); width:16px; height:16px; }
+.col-chip.suggested { border-color:var(--accent); background:rgba(16,163,127,0.06); }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; border-radius:8px; padding:12px 24px; font-weight:600; font-size:0.95rem; cursor:pointer; text-decoration:none; }
+.btn:hover { background:var(--accent-hover); }
+.btn:disabled { background:#D1D5DB; cursor:not-allowed; }
+.btn.secondary { background:#fff; color:var(--text); border:1px solid var(--line); }
+table { width:100%; border-collapse:collapse; font-size:0.8125rem; margin-top:10px; }
+th { text-align:left; padding:8px 10px; font-size:0.68rem; text-transform:uppercase; color:var(--text-2); border-bottom:2px solid var(--line); }
+td { padding:8px 10px; border-bottom:1px solid var(--line); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
+.table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+.hidden { display:none; }
+.actions { display:flex; gap:12px; margin:20px 0; align-items:center; }
+.stat { font-size:0.875rem; color:var(--text-2); }
+footer { padding:32px 0 48px; margin-top:40px; border-top:1px solid var(--line); color:var(--text-2); font-size:0.875rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Обезличиватель CSV</h1>
+    <p class="muted">Замена ФИО/телефонов на «Клиент N» — прямо в браузере</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="note good"><strong>Данные никуда не отправляются.</strong> Файл читается и обрабатывается прямо в вашем браузере (JavaScript в этой странице) — ни один байт не уходит на сервер. Можно проверить: отключите интернет и попробуйте снова, инструмент продолжит работать.</div>
+
+  <div class="dropzone" id="dropzone">
+    <p><strong>Перетащите CSV сюда</strong> или нажмите, чтобы выбрать файл</p>
+    <p class="muted" style="margin-top:8px;font-size:0.8rem">Первая строка — заголовки колонок</p>
+    <input type="file" id="fileInput" accept=".csv,text/csv">
+  </div>
+
+  <div id="workArea" class="hidden">
+    <h2>Какие колонки обезличить?</h2>
+    <p class="muted" style="margin-bottom:8px">Зелёным подсвечены колонки, похожие на ФИО/телефон/почту — проверьте и поправьте при необходимости.</p>
+    <div class="cols" id="colsList"></div>
+
+    <div class="actions">
+      <button class="btn" id="anonymizeBtn">Обезличить</button>
+      <span class="stat" id="rowStat"></span>
+    </div>
+
+    <h2>Предпросмотр результата</h2>
+    <div class="table-wrap"><table id="previewTable"></table></div>
+
+    <div class="actions">
+      <button class="btn hidden" id="downloadBtn">Скачать обезличенный CSV →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">Иллюстрация к практикуму М5-02 «Мини-инструмент» · курс «ИИ-агенты для предпринимателей»</div>
+</footer>
+
+<script>
+const NAME_HINTS = ['фио','имя','клиент','контраг','client','name','customer'];
+const CONTACT_HINTS = ['телефон','почта','мейл','моб','phone','tel','mail'];
+const PII_HINTS = [...NAME_HINTS, ...CONTACT_HINTS];
+
+function labelPrefix(header) {
+  const h = header.toLowerCase();
+  if (NAME_HINTS.some(hint => h.includes(hint))) return 'Клиент';
+  if (CONTACT_HINTS.some(hint => h.includes(hint))) return 'Контакт';
+  return 'Значение';
+}
+
+function parseCSV(text) {
+  const lines = text.replace(/\r/g,'').split('\n').filter(l => l.length);
+  return lines.map(line => {
+    // простая обработка полей в кавычках с запятыми внутри
+    const cells = [];
+    let cur = '', inQuotes = false;
+    for (let i=0; i<line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQuotes = !inQuotes; continue; }
+      if (ch === ',' && !inQuotes) { cells.push(cur); cur=''; continue; }
+      cur += ch;
+    }
+    cells.push(cur);
+    return cells;
+  });
+}
+
+let headers = [], rows = [], anonymizedRows = null;
+
+function renderColumns() {
+  const el = document.getElementById('colsList');
+  el.innerHTML = headers.map((h, i) => {
+    const suggested = PII_HINTS.some(hint => h.toLowerCase().includes(hint));
+    return `<label class="col-chip ${suggested?'suggested':''}">
+      <input type="checkbox" data-col="${i}" ${suggested?'checked':''}> ${h}
+    </label>`;
+  }).join('');
+}
+
+function renderPreview(data, limit=8) {
+  const table = document.getElementById('previewTable');
+  const head = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = data.slice(0, limit).map(r => `<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+  table.innerHTML = head + body;
+}
+
+function handleFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const parsed = parseCSV(e.target.result);
+    headers = parsed[0];
+    rows = parsed.slice(1);
+    document.getElementById('workArea').classList.remove('hidden');
+    document.getElementById('rowStat').textContent = `${rows.length} строк, ${headers.length} колонок`;
+    document.getElementById('downloadBtn').classList.add('hidden');
+    renderColumns();
+    renderPreview(rows);
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+document.getElementById('anonymizeBtn').addEventListener('click', () => {
+  const checked = Array.from(document.querySelectorAll('#colsList input:checked')).map(cb => parseInt(cb.dataset.col));
+  const maps = {}; // col -> {originalValue: 'Клиент N'}
+  checked.forEach(col => maps[col] = {});
+
+  anonymizedRows = rows.map(row => {
+    const newRow = [...row];
+    checked.forEach(col => {
+      const val = row[col];
+      if (!val) return;
+      if (!maps[col][val]) {
+        const n = Object.keys(maps[col]).length + 1;
+        maps[col][val] = `${labelPrefix(headers[col])} ${n}`;
+      }
+      newRow[col] = maps[col][val];
+    });
+    return newRow;
+  });
+
+  renderPreview(anonymizedRows);
+  document.getElementById('downloadBtn').classList.remove('hidden');
+});
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const csv = [headers, ...anonymizedRows].map(r => r.map(c => /[,"]/.test(c) ? `"${c.replace(/"/g,'""')}"` : c).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'anonymized.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+const dz = document.getElementById('dropzone');
+const fi = document.getElementById('fileInput');
+dz.addEventListener('click', () => fi.click());
+fi.addEventListener('change', () => { if (fi.files[0]) handleFile(fi.files[0]); });
+['dragover','dragenter'].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); dz.classList.add('drag'); }));
+['dragleave','drop'].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); dz.classList.remove('drag'); }));
+dz.addEventListener('drop', e => { if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+</script>
+
+</body>
+</html>
