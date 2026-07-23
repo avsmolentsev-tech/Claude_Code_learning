@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Офисная мебель в Казани — открытые цены, честная закупка | ОфисСтиль</title>
+<meta name="description" content="Офисная мебель в Казани: цены сразу на сайте, без «свяжитесь с менеджером». Рассчитайте бюджет на обустройство офиса за 30 секунд — калькулятор ниже. Доставка и сборка по городу.">
+<link rel="canonical" href="https://example-office-style.ru/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ОфисСтиль",
+  "description": "Офисная мебель в Казани: открытые цены, прямая закупка у производителей, доставка и сборка.",
+  "areaServed": "Казань"
+}
+</script>
+<style>
+:root {
+  --text:#171717; --text-2:#6B7280; --accent:#10A37F; --accent-hover:#0D8C6D;
+  --line:#E5E7EB; --card:#F9FAFB; --amber:#F59E0B; --dark:#0E3B30;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Inter',system-ui,sans-serif; color:var(--text); background:#fff; line-height:1.6; }
+.container { max-width:1100px; margin:0 auto; padding:0 24px; }
+header.site { padding:20px 0; border-bottom:1px solid var(--line); }
+header.site .container { display:flex; justify-content:space-between; align-items:center; }
+.logo { font-weight:700; font-size:1.15rem; }
+.logo span { color:var(--accent); }
+nav a { color:var(--text-2); text-decoration:none; font-size:0.9rem; margin-left:28px; }
+nav a:hover { color:var(--accent); }
+
+.hero { background:var(--dark); color:#fff; padding:72px 0; }
+.hero .badge { display:inline-block; background:rgba(16,163,127,0.18); color:#4FD8B0; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; padding:6px 14px; border-radius:8px; margin-bottom:20px; }
+.hero h1 { font-size:2.6rem; font-weight:700; line-height:1.15; max-width:680px; margin-bottom:20px; }
+.hero h1 span { color:#3ECFA0; }
+.hero p { color:#9FD9C9; font-size:1.15rem; max-width:600px; margin-bottom:32px; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; border-radius:8px; padding:14px 28px; font-weight:600; font-size:1rem; cursor:pointer; text-decoration:none; transition:background .15s; }
+.btn:hover { background:var(--accent-hover); }
+
+section.values { padding:64px 0; }
+h2 { font-size:1.7rem; font-weight:700; margin-bottom:12px; }
+.values-sub { color:var(--text-2); margin-bottom:36px; max-width:640px; }
+.values-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.value-card { border:1px solid var(--line); border-radius:12px; padding:24px; }
+.value-card .ic { width:44px; height:44px; border-radius:10px; background:rgba(16,163,127,0.12); color:var(--accent); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.2rem; margin-bottom:16px; }
+.value-card h3 { font-size:1rem; margin-bottom:8px; }
+.value-card p { font-size:0.875rem; color:var(--text-2); }
+
+section.calc { background:var(--card); padding:64px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.calc-box { display:grid; grid-template-columns:1.2fr 1fr; gap:32px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:36px; }
+.field { margin-bottom:24px; }
+.field label { display:block; font-weight:600; font-size:0.9rem; margin-bottom:10px; }
+.field input[type=number] { width:140px; padding:10px 14px; border:1px solid var(--line); border-radius:8px; font-size:1rem; }
+.tier-options { display:flex; gap:10px; }
+.tier-btn { flex:1; border:2px solid var(--line); border-radius:10px; padding:14px 10px; text-align:center; cursor:pointer; font-size:0.85rem; font-weight:600; color:var(--text-2); transition:all .12s; }
+.tier-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(16,163,127,0.06); }
+.tier-btn .price { display:block; font-size:0.7rem; font-weight:400; margin-top:4px; }
+.addon-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); font-size:0.9rem; }
+.addon-row input { width:18px; height:18px; accent-color:var(--accent); }
+.addon-row .addon-price { margin-left:auto; color:var(--text-2); font-size:0.85rem; }
+.result { background:var(--dark); color:#fff; border-radius:12px; padding:28px; align-self:start; position:sticky; top:20px; }
+.result h3 { font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em; color:#9FD9C9; margin-bottom:20px; }
+.result-line { display:flex; justify-content:space-between; font-size:0.875rem; color:#C9E8DE; padding:6px 0; }
+.result-line.discount { color:#3ECFA0; }
+.result-total { display:flex; justify-content:space-between; font-size:1.5rem; font-weight:700; margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); }
+.result .cta-btn { display:block; width:100%; text-align:center; margin-top:24px; }
+
+footer.site { padding:32px 0; color:var(--text-2); font-size:0.875rem; text-align:center; border-top:1px solid var(--line); }
+@media (max-width: 800px) { .values-grid { grid-template-columns:repeat(2,1fr); } .calc-box { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="logo">Офис<span>Стиль</span></div>
+    <nav><a href="#calc">Калькулятор</a><a href="#values">Почему мы</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="badge">Офисная мебель · Казань</span>
+    <h1>Обставим офис честно: <span>цены сразу, без звонка менеджеру</span></h1>
+    <p>Средний сегмент, прямая закупка у ближайших производителей, доставка и сборка по Казани. Посчитайте бюджет прямо сейчас — ниже.</p>
+    <a href="#calc" class="btn">Рассчитать стоимость →</a>
+  </div>
+</section>
+
+<section class="values" id="values">
+  <div class="container">
+    <h2>Почему у нас, а не у федеральной сети</h2>
+    <p class="values-sub">Ровно то, что мы обещаем клиентам в контенте — здесь же, на сайте, а не только в постах.</p>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="ic">₽</div>
+        <h3>Открытые цены</h3>
+        <p>Никакого «свяжитесь с менеджером» — калькулятор ниже даёт цифру за 30 секунд.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic">130</div>
+        <h3>Прямая закупка</h3>
+        <p>Ближайшая фабрика в 130 км — без наценки трёх посредников.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic">✓</div>
+        <h3>Дизайн-проект</h3>
+        <p>Бесплатно на заказ от 5 рабочих мест — как и должно быть у всех.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic">24ч</div>
+        <h3>Быстрая сборка</h3>
+        <p>Доставка и сборка в течение суток по Казани при заказе из наличия.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="calc" id="calc">
+  <div class="container">
+    <h2>Калькулятор бюджета на офис</h2>
+    <p class="values-sub">Реальный расчёт по вашим параметрам — не «цена от», а точная сумма с разбивкой.</p>
+    <div class="calc-box">
+      <div>
+        <div class="field">
+          <label>Сколько рабочих мест обустраиваем?</label>
+          <input type="number" id="seats" value="10" min="1" max="200">
+        </div>
+        <div class="field">
+          <label>Уровень мебели</label>
+          <div class="tier-options" id="tierOptions">
+            <div class="tier-btn active" data-tier="econom">Эконом<span class="price">9 000 ₽/место</span></div>
+            <div class="tier-btn" data-tier="standard">Стандарт<span class="price">17 000 ₽/место</span></div>
+            <div class="tier-btn" data-tier="premium">Премиум<span class="price">32 000 ₽/место</span></div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Дополнительно</label>
+          <div class="addon-row"><input type="checkbox" id="addon-cabinet"> <label for="addon-cabinet" style="font-weight:400">Кабинет руководителя</label> <span class="addon-price" id="price-cabinet"></span></div>
+          <div class="addon-row"><input type="checkbox" id="addon-meeting"> <label for="addon-meeting" style="font-weight:400">Переговорная</label> <span class="addon-price" id="price-meeting"></span></div>
+          <div class="addon-row"><input type="checkbox" id="addon-lounge"> <label for="addon-lounge" style="font-weight:400">Зона отдыха</label> <span class="addon-price" id="price-lounge"></span></div>
+        </div>
+      </div>
+      <div class="result">
+        <h3>Ваш расчёт</h3>
+        <div class="result-line"><span id="seatsLabel">Рабочие места</span><span id="seatsSum">0 ₽</span></div>
+        <div class="result-line" id="addonsLine" style="display:none"><span>Доп. опции</span><span id="addonsSum">0 ₽</span></div>
+        <div class="result-line discount" id="discountLine" style="display:none"><span id="discountLabel">Скидка за объём</span><span id="discountSum">0 ₽</span></div>
+        <div class="result-line"><span>Доставка и сборка (6%)</span><span id="deliverySum">0 ₽</span></div>
+        <div class="result-total"><span>Итого</span><span id="totalSum">0 ₽</span></div>
+        <a href="#" class="btn cta-btn">Получить точный расчёт →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">Иллюстрация к практикуму М5 «Вайб-кодинг для бизнеса» · демо-магазин курса «ИИ-агенты для предпринимателей»</div>
+</footer>
+
+<script>
+const TIERS = {
+  econom:   { seat: 9000,  cabinet: 35000, meeting: 45000, lounge: 28000 },
+  standard: { seat: 17000, cabinet: 65000, meeting: 85000, lounge: 52000 },
+  premium:  { seat: 32000, cabinet: 120000, meeting: 150000, lounge: 95000 },
+};
+const TIER_NAMES = { econom: 'Эконом', standard: 'Стандарт', premium: 'Премиум' };
+let currentTier = 'econom';
+
+function fmt(n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; }
+
+function updateAddonPrices() {
+  const t = TIERS[currentTier];
+  document.getElementById('price-cabinet').textContent = fmt(t.cabinet);
+  document.getElementById('price-meeting').textContent = fmt(t.meeting);
+  document.getElementById('price-lounge').textContent = fmt(t.lounge);
+}
+
+function calculate() {
+  const seats = Math.max(1, parseInt(document.getElementById('seats').value) || 0);
+  const t = TIERS[currentTier];
+  const seatsSum = seats * t.seat;
+
+  let addonsSum = 0;
+  const addons = [
+    ['addon-cabinet', t.cabinet],
+    ['addon-meeting', t.meeting],
+    ['addon-lounge', t.lounge],
+  ];
+  addons.forEach(([id, price]) => {
+    if (document.getElementById(id).checked) addonsSum += price;
+  });
+
+  const subtotal = seatsSum + addonsSum;
+  let discountPct = 0;
+  if (seats >= 20) discountPct = 0.07;
+  else if (seats >= 10) discountPct = 0.03;
+  const discountSum = subtotal * discountPct;
+  const afterDiscount = subtotal - discountSum;
+  const delivery = afterDiscount * 0.06;
+  const total = afterDiscount + delivery;
+
+  document.getElementById('seatsLabel').textContent = `${seats} раб. мест × ${fmt(t.seat)} (${TIER_NAMES[currentTier]})`;
+  document.getElementById('seatsSum').textContent = fmt(seatsSum);
+
+  const addonsLine = document.getElementById('addonsLine');
+  if (addonsSum > 0) { addonsLine.style.display='flex'; document.getElementById('addonsSum').textContent = fmt(addonsSum); }
+  else addonsLine.style.display = 'none';
+
+  const discountLine = document.getElementById('discountLine');
+  if (discountPct > 0) {
+    discountLine.style.display = 'flex';
+    document.getElementById('discountLabel').textContent = `Скидка за объём (${Math.round(discountPct*100)}%)`;
+    document.getElementById('discountSum').textContent = '−' + fmt(discountSum);
+  } else discountLine.style.display = 'none';
+
+  document.getElementById('deliverySum').textContent = fmt(delivery);
+  document.getElementById('totalSum').textContent = fmt(total);
+}
+
+document.querySelectorAll('.tier-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTier = btn.dataset.tier;
+    updateAddonPrices();
+    calculate();
+  });
+});
+document.getElementById('seats').addEventListener('input', calculate);
+document.querySelectorAll('.addon-row input').forEach(cb => cb.addEventListener('change', calculate));
+
+updateAddonPrices();
+calculate();
+</script>
+
+</body>
+</html>
