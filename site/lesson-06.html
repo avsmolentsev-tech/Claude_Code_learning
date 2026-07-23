@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CLAUDE.md и файлы, которые надо настроить сразу — М0, урок 6</title>
+<title>VS Code: удобное рабочее место для агента — М0, урок 6</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,9 +17,9 @@
 
 <section class="hero" style="padding-bottom:0">
   <div class="container">
-    <span class="badge">Модуль 0 · Новичок · ~30 мин</span>
-    <h1>CLAUDE.md и файлы, которые надо настроить сразу</h1>
-    <div class="note">CLAUDE.md — не программирование, а обычный текст. Файл, который агент перечитывает при каждом запуске: написал один раз — работает всегда.</div>
+    <span class="badge">Модуль 0 · Новичок · ~40 мин</span>
+    <h1>VS Code: удобное рабочее место для агента</h1>
+    <div class="note">Интерфейс расширения обновляется часто — названия кнопок сверены 20.07.2026, при прохождении ориентируйся на смысл.</div>
   </div>
 </section>
 
@@ -27,144 +27,133 @@
   <div class="container">
 
     <h2>Что получишь</h2>
-    <p>«Должностную инструкцию» для твоего агента: он начнёт отвечать по-русски, считать в рублях и соблюдать твои правила — без напоминаний в каждом диалоге. Плюс правильную структуру папок на старте.</p>
+    <p>Рабочее место, где всё в одном окне: слева файлы, в центре документ, рядом агент. Главное — ты будешь <strong>видеть каждое изменение</strong>, которое агент вносит в файлы, до того как его принять.</p>
 
     <h2>Кому и зачем</h2>
-    <p>Агент — как новый сотрудник: толковый, но о твоём бизнесе не знает ничего и каждое утро приходит «с чистого листа». CLAUDE.md — файл с инструкциями, который агент перечитывает при каждом запуске. Это самый недооценённый час настройки из всего курса.</p>
+    <p>Терминал из урока 03 работает, но текстовый интерфейс неудобен для повседневности: не видно файлов, не видно правок. VS Code — бесплатный редактор от Microsoft, который превращает работу с агентом из «переписки вслепую» в наглядный процесс. Это не «программа для программистов» — считай его офисным приложением для работы с ИИ.</p>
 
     <h2>Шаги</h2>
+    <p class="muted small">Все сочетания клавиш в уроке — для Windows; на Mac заменяй <strong>Ctrl на Cmd</strong> (например, Cmd+Shift+X).</p>
 
-    <h3>Шаг 1. Пойми два уровня инструкций</h3>
-    <p><strong>Глобальный</strong> — «про тебя», действует во всех папках и проектах. Windows: <code>C:\Users\Имя\.claude\CLAUDE.md</code>; Mac: <code>~/.claude/CLAUDE.md</code> (папка скрытая — в Finder покажи скрытые файлы сочетанием Cmd+Shift+точка).</p>
-    <p><strong>Проектный</strong> <code>CLAUDE.md</code> в папке задачи — «про эту работу». Действует только там. Агент читает оба: сначала твой общий, потом проектный.</p>
-
-    <div class="scheme">
-      <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
-        <rect x="190" y="1" width="300" height="60" rx="10" class="accent-tint accent-stroke" stroke-width="2"/>
-        <text x="340" y="26" text-anchor="middle" class="label-strong" style="fill:var(--accent)">ГЛОБАЛЬНЫЙ CLAUDE.md</text>
-        <text x="340" y="45" text-anchor="middle" class="label">«про тебя» — действует везде, читается первым</text>
-
-        <line x1="340" y1="61" x2="150" y2="120" class="line-stroke" stroke-width="2"/>
-        <line x1="340" y1="61" x2="340" y2="120" class="line-stroke" stroke-width="2"/>
-        <line x1="340" y1="61" x2="530" y2="120" class="line-stroke" stroke-width="2"/>
-
-        <rect x="50" y="120" width="200" height="130" rx="10" class="box-fill line-stroke"/>
-        <rect x="65" y="134" width="20" height="7" rx="2" class="grey-fill"/>
-        <text x="150" y="150" text-anchor="middle" class="label" style="font-weight:600">Отчёты по продажам</text>
-        <rect x="65" y="164" width="170" height="18" rx="4" class="muted-fill"/>
-        <text x="150" y="177" text-anchor="middle" class="mono-label">CLAUDE.md проекта</text>
-        <text x="150" y="205" text-anchor="middle" class="label">выгрузки из 1С,</text>
-        <text x="150" y="221" text-anchor="middle" class="label">правила отчётов</text>
-
-        <rect x="240" y="120" width="200" height="130" rx="10" class="box-fill line-stroke"/>
-        <rect x="255" y="134" width="20" height="7" rx="2" class="grey-fill"/>
-        <text x="340" y="150" text-anchor="middle" class="label" style="font-weight:600">Документы</text>
-        <rect x="255" y="164" width="170" height="18" rx="4" class="muted-fill"/>
-        <text x="340" y="177" text-anchor="middle" class="mono-label">CLAUDE.md проекта</text>
-        <text x="340" y="205" text-anchor="middle" class="label">договоры,</text>
-        <text x="340" y="221" text-anchor="middle" class="label">шаблоны</text>
-
-        <rect x="430" y="120" width="200" height="130" rx="10" class="box-fill line-stroke"/>
-        <rect x="445" y="134" width="20" height="7" rx="2" class="grey-fill"/>
-        <text x="530" y="150" text-anchor="middle" class="label" style="font-weight:600">Контент</text>
-        <rect x="445" y="164" width="170" height="18" rx="4" class="muted-fill"/>
-        <text x="530" y="177" text-anchor="middle" class="mono-label">CLAUDE.md проекта</text>
-        <text x="530" y="205" text-anchor="middle" class="label">посты,</text>
-        <text x="530" y="221" text-anchor="middle" class="label">тексты</text>
-      </svg>
-    </div>
-    <p class="term-caption">Схема: один глобальный CLAUDE.md «про тебя» — и свой проектный в каждой рабочей папке, «про эту работу». Агент складывает оба.</p>
-
-    <h3>Шаг 2. Напиши глобальный CLAUDE.md</h3>
-    <p>Открой в VS Code папку <code>.claude</code> из своей домашней папки (если файла CLAUDE.md нет — создай). Лайфхак для обеих систем: можно просто попросить агента — «создай мне глобальный CLAUDE.md с таким содержимым…». Возьми за основу и перепиши под себя:</p>
-
-    <pre><code># Обо мне
-Я — [имя], владелец [бизнес: например, сети магазинов автозапчастей в Казани].
-Не программист: объясняй по-простому, без жаргона.
-
-# Правила
-- Общайся по-русски.
-- Суммы в рублях, формат: 1 234 567 ₽.
-- Даты в формате ДД.ММ.ГГГГ.
-- Перед удалением файлов или отправкой чего-либо в интернет — спрашивай.
-- Деловые документы пиши без канцелярита, коротко.</code></pre>
-
-    <p>Сохрани. Проверь: запусти агента в любой папке и спроси «сколько будет 1500 долларов по курсу 90?» — ответ должен прийти по-русски и в формате с ₽.</p>
-
-    <h3>Шаг 3. Заведи проектный CLAUDE.md</h3>
+    <h3>Шаг 1. Установи VS Code</h3>
     <ol>
-      <li>Открой в VS Code рабочую папку, например <code>ИИ-проекты\Отчёты по продажам</code>.</li>
-      <li>В панели агента набери команду <code>/init</code> — агент осмотрит папку и создаст черновик CLAUDE.md.</li>
+      <li>Открой <code>code.visualstudio.com</code> → синяя кнопка <strong>Download</strong> (сайт сам определит твою систему).</li>
+      <li><strong>Windows:</strong> запусти установщик, оставь галки по умолчанию, плюс отметь <strong>«Открывать через Code» в контекстном меню папок</strong>. <strong>Mac:</strong> распакуй скачанный архив и перетащи Visual Studio Code в папку «Программы».</li>
+      <li>Запусти VS Code.</li>
     </ol>
 
-    <div class="term">
-      <div class="term-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="title">claude</span></div>
-      <div class="term-body"><span class="dim">&gt;</span> /init
+    <h3>Шаг 2. Переключи на русский</h3>
+    <ol>
+      <li>Нажми <strong>Ctrl+Shift+X</strong> — откроется панель расширений (Extensions).</li>
+      <li>В поиске набери <code>Russian Language Pack</code> → <strong>Install</strong>.</li>
+      <li>Справа внизу появится предложение перезапустить — соглашайся. Интерфейс станет русским.</li>
+    </ol>
 
-<span class="acc">●</span> Осматриваю папку: файлы выгрузок из 1С, формат sales_2026-07.xlsx.
-Создаю черновик CLAUDE.md с описанием структуры.
+    <h3>Шаг 3. Установи расширение Claude Code</h3>
+    <ol>
+      <li>Снова <strong>Ctrl+Shift+X</strong>, в поиске: <code>Claude Code</code>.</li>
+      <li>Выбери расширение от издателя <strong>Anthropic</strong> (проверь синюю галочку верификации рядом с именем издателя!) → <strong>Install</strong>.</li>
+      <li>В левой боковой панели появится иконка Claude. Нажми её.</li>
+      <li>Расширение подхватит установку и авторизацию из урока 03. Если попросит войти — авторизуйся через браузер, как раньше.</li>
+    </ol>
 
-  <strong>Create file</strong> <span class="dim">CLAUDE.md</span>
-  <span class="acc">❯ 1. Yes</span>
-    2. Yes, allow all edits during this session
-    3. No, and tell Claude what to do differently <span class="dim">(esc)</span></div>
+    <h3>Шаг 4. Освой рабочий цикл</h3>
+    <ol>
+      <li><strong>Файл → Открыть папку</strong> → выбери свою папку <code>ИИ-проекты\Разбор документов</code> (из урока 04). Слева увидишь дерево файлов.</li>
+      <li>В панели Claude напиши задачу, например: <em>«сделай из договора в этой папке краткую выжимку в новый файл выжимка.md»</em>.</li>
+      <li>Смотри, как агент работает: какие файлы читает, что предлагает изменить. Изменения показываются <strong>диффом</strong>: красное — удаляется, зелёное — добавляется. Принять или отклонить — твоя кнопка.</li>
+      <li>Созданный файл открой двойным кликом в дереве слева — читай и правь прямо здесь.</li>
+    </ol>
+
+    <div class="scheme">
+      <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="678" height="338" rx="12" class="box-fill line-stroke"/>
+        <rect x="1" y="1" width="678" height="30" class="muted-fill"/>
+        <line x1="1" y1="31" x2="679" y2="31" class="line-stroke"/>
+        <circle cx="20" cy="16" r="5" fill="#FF5F57"/>
+        <circle cx="38" cy="16" r="5" fill="#FEBC2E"/>
+        <circle cx="56" cy="16" r="5" fill="#28C840"/>
+        <text x="340" y="20" text-anchor="middle" class="label">VS Code — Разбор документов</text>
+
+        <line x1="150" y1="31" x2="150" y2="339" class="line-stroke"/>
+        <line x1="470" y1="31" x2="470" y2="339" class="line-stroke"/>
+
+        <text x="18" y="52" class="label" style="font-weight:600">ФАЙЛЫ</text>
+        <rect x="18" y="64" width="14" height="6" rx="1" class="grey-fill"/>
+        <text x="38" y="70" class="label">Разбор документов</text>
+        <text x="30" y="94" class="label">договор.pdf</text>
+        <rect x="18" y="102" width="114" height="18" rx="4" class="accent-tint"/>
+        <text x="30" y="115" class="label-strong" style="fill:var(--accent)">выжимка.md</text>
+        <text x="30" y="140" class="label">заметка.txt</text>
+
+        <text x="168" y="52" class="label" style="font-weight:600">ВЫЖИМКА.MD</text>
+        <rect x="168" y="66" width="284" height="16" rx="3" class="grey-fill" opacity="0.5"/>
+        <rect x="168" y="88" width="200" height="16" rx="3" class="grey-fill" opacity="0.5"/>
+        <rect x="168" y="110" width="284" height="18" rx="3" class="diff-del"/>
+        <text x="174" y="123" class="mono-label">− Стороны: см. приложение 1</text>
+        <rect x="168" y="132" width="284" height="18" rx="3" class="diff-add"/>
+        <text x="174" y="145" class="mono-label">+ Стороны: ООО «Атлант», ИП Смоленцев</text>
+        <rect x="168" y="154" width="240" height="16" rx="3" class="grey-fill" opacity="0.5"/>
+        <rect x="168" y="176" width="284" height="16" rx="3" class="grey-fill" opacity="0.5"/>
+        <text x="310" y="325" text-anchor="middle" class="label" style="font-style:italic">красное — удаляется, зелёное — добавляется</text>
+
+        <text x="488" y="52" class="label" style="font-weight:600">CLAUDE</text>
+        <rect x="488" y="64" width="176" height="40" rx="8" class="muted-fill"/>
+        <text x="498" y="80" class="mono-label">сделай выжимку договора</text>
+        <text x="498" y="96" class="mono-label">в файл выжимка.md</text>
+
+        <rect x="488" y="114" width="176" height="60" rx="8" class="accent-tint"/>
+        <circle cx="500" cy="128" r="4" class="accent-fill"/>
+        <text x="510" y="132" class="label">Прочитал договор.pdf,</text>
+        <text x="498" y="148" class="label">записал выжимку в</text>
+        <text x="498" y="164" class="label">выжимка.md</text>
+
+        <circle cx="510" cy="200" r="12" fill="#28C840"/>
+        <text x="510" y="204" text-anchor="middle" fill="#fff" style="font-size:12px;font-weight:700">✓</text>
+        <text x="528" y="204" class="label">Accept</text>
+        <circle cx="600" cy="200" r="12" class="grey-fill"/>
+        <text x="600" y="204" text-anchor="middle" style="font-size:11px;font-weight:700">✕</text>
+        <text x="618" y="204" class="label">Reject</text>
+      </svg>
     </div>
-    <p class="term-caption">Команда <code>/init</code> — быстрый способ получить черновик проектного CLAUDE.md, а не писать с нуля.</p>
+    <p class="term-caption">Схема макета VS Code: слева дерево файлов, в центре документ с диффом, справа панель Claude с запросом и ответом. Точный вид интерфейса — на скриншотах, когда дойдёшь до этого шага руками.</p>
 
-    <p>Допиши руками главное, чего агент не знает:</p>
+    <p>Альтернатива в том же окне: <strong>Ctrl+`</strong> (клавиша слева от единицы) открывает встроенный терминал — там работает привычная команда <code>claude</code> из урока 03. Панель и терминал — два входа к одному агенту, пользуйся тем, что удобнее.</p>
 
-    <pre><code># Что в этой папке
-Выгрузки из 1С по продажам. Колонки: дата, контрагент, номенклатура, сумма, менеджер.
-Файлы приходят раз в неделю, имя вида sales_2026-07.xlsx.
-
-# Правила проекта
-- Готовые отчёты складывай в подпапку reports/.
-- В отчётах не показывай наценку — только выручку.
-- Черновики удаляй после подтверждения результата.</code></pre>
-
-    <h3>Шаг 4. Настрой стартовую структуру папок</h3>
-    <p>Минимальный набор, который стоит завести сегодня:</p>
-
-    <pre><code>ИИ-проекты\              (Windows: C:\ИИ-проекты\, Mac: ~/ИИ-проекты/)
-  Отчёты по продажам\   ← CLAUDE.md + выгрузки
-  Документы\            ← CLAUDE.md + договоры, шаблоны
-  Контент\              ← CLAUDE.md + посты, тексты</code></pre>
-
-    <p>Правило: <strong>одна задача — одна папка — свой CLAUDE.md</strong>. Агент в папке «Контент» не должен спотыкаться об выгрузки из 1С.</p>
-
-    <h3>Шаг 5. Узнай, что живёт рядом (пока без настройки)</h3>
-    <p>В папке проекта агент может создать служебную папку <code>.claude</code> — внутри неё:</p>
-    <ul>
-      <li><code>settings.json</code> — тонкая настройка разрешений («это можно без вопросов») — разберём в М9;</li>
-      <li>свои команды и скилы — научимся делать в М3.</li>
-    </ul>
-    <p>Сейчас просто знай, что они есть — трогать не нужно.</p>
+    <h3>Шаг 5. Три настройки для комфорта</h3>
+    <ol>
+      <li><strong>Файл → Автосохранение</strong> — включи, чтобы не терять правки.</li>
+      <li>Мелкий шрифт? <strong>Ctrl и «+»</strong> — увеличение всего интерфейса.</li>
+      <li>Тема: <strong>Файл → Параметры → Тема → Цветовая тема</strong> — рекомендую светлую: меньше «хакерской» эстетики, привычнее для офисных глаз.</li>
+    </ol>
 
     <h2>Чек-лист</h2>
     <ul class="checklist">
-      <li>Глобальный CLAUDE.md написан, агент отвечает по-русски и в рублях в любой папке</li>
-      <li>В одной рабочей папке есть проектный CLAUDE.md (через <code>/init</code> + правки руками)</li>
-      <li>Структура <code>ИИ-проекты</code> с папками по задачам создана</li>
+      <li>VS Code установлен и на русском</li>
+      <li>Расширение Claude Code от Anthropic установлено, панель открывается</li>
+      <li>Открыл свою папку, агент создал файл, я увидел дифф и принял его</li>
+      <li>Знаю, как открыть встроенный терминал (Ctrl+`)</li>
     </ul>
 
     <h2>Типичные ошибки</h2>
     <table>
       <tr><th>Симптом</th><th>Причина</th><th>Решение</th></tr>
-      <tr><td>Агент игнорирует часть инструкций</td><td>CLAUDE.md — простыня на 3 страницы</td><td>Сокращай. Короткие списки работают, эссе — нет</td></tr>
-      <tr><td>Агент «путается в показаниях»</td><td>Противоречивые правила (в глобальном одно, в проектном другое)</td><td>Проверь оба файла, убери конфликт: проектный уточняет глобальный, а не спорит с ним</td></tr>
-      <tr><td>Вписал в CLAUDE.md весь прайс на 500 позиций</td><td>Перепутал инструкции с данными</td><td>CLAUDE.md — правила. Данные (прайсы, справочники) — отдельными файлами в папке, агент их найдёт</td></tr>
-      <tr><td>Создал CLAUDE.md, а агент не заметил</td><td>Файл создан после запуска агента</td><td>Перезапусти диалог — инструкции читаются на старте</td></tr>
+      <tr><td>Расширение не находит Claude Code</td><td>VS Code запущен до установки CLI</td><td>Полностью закрой VS Code (все окна) и открой заново</td></tr>
+      <tr><td>Иконка Claude пропала из панели</td><td>Случайно скрыл</td><td>Правый клик по левой боковой панели → отметь Claude в списке</td></tr>
+      <tr><td>«Открыть папку» — а папка на сетевом диске тормозит</td><td>Сетевые папки медленные</td><td>Работай с локальной копией в своей папке <code>ИИ-проекты</code>, результат потом переноси</td></tr>
+      <tr><td>Встроенный терминал открывает cmd, команды не работают</td><td>Профиль терминала по умолчанию — CMD</td><td>Ctrl+Shift+P → «Terminal: Select Default Profile» → PowerShell</td></tr>
+      <tr><td>Всё на английском после установки языкового пакета</td><td>Не перезапустил</td><td>Закрой и открой VS Code; либо Ctrl+Shift+P → «Configure Display Language» → ru</td></tr>
     </table>
 
     <h2>Домашнее задание</h2>
-    <p>Напиши глобальный CLAUDE.md про свой бизнес и проектный — для одной реальной папки. Тест: задай агенту вопрос, где инструкции должны проявиться (валюта, язык, тон), и убедись, что они работают. Потом неделю дописывай по одному правилу каждый раз, когда агент сделал «не так, как ты привык».</p>
+    <p>Перенеси одно из упражнений урока 04 в VS Code: открой папку, поставь агенту ту же задачу и в этот раз <strong>прочитай дифф внимательно</strong>, прежде чем принять. Найди в изменениях хотя бы одну вещь, которую попросишь сделать иначе — и попроси.</p>
 
     <h2>Заметки из практики</h2>
-    <p class="muted">Вопрос автора курса, породивший урок: «про CLAUDE.md — какие там файлы надо сразу настроить?» Ответ уместился в шаг 4: на старте достаточно глобального CLAUDE.md и папок с проектными. Всё остальное (настройки, скилы, хуки) — по мере роста, в свои модули.</p>
+    <p class="muted">Именно запрос автора курса «подробно нужно про подключение и настройку VS Code» породил этот урок: в большинстве материалов по Claude Code этот шаг пропускают, как «очевидный». Для непрограммиста он не очевиден — а даёт наибольший прирост удобства из всего модуля.</p>
 
     <nav class="lesson-nav">
-      <a href="lesson-05.html">← Урок 5. VS Code</a>
-      <a href="lesson-07.html">М1, урок 1. Разбор выгрузки →</a>
+      <a href="lesson-05.html">← Урок 5. Клод на компьютере</a>
+      <a href="lesson-07.html">Урок 7. CLAUDE.md →</a>
     </nav>
   </div>
 </section>
