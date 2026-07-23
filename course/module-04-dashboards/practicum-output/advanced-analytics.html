@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Продвинутая аналитика продаж: RFM, ABC, когорты, CLV, прогноз, HHI</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+:root {
+  --text: #171717; --text-2: #6B7280; --accent: #10A37F;
+  --line: #E5E7EB; --card: #F9FAFB; --amber: #F59E0B; --red: #EF4444; --blue: #3B82F6; --purple:#8B5CF6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+header { padding: 40px 0 24px; border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+h1 { font-size: 1.9rem; font-weight: 600; margin-bottom: 8px; }
+h2 { font-size: 1.4rem; font-weight: 600; margin: 52px 0 8px; }
+h2 .tag { font-size:0.7rem; vertical-align:middle; margin-left:10px; background:rgba(139,92,246,0.12); color:#6D28D9; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:0.04em; }
+.sub { color: var(--text-2); font-size:0.9rem; margin-bottom:20px; }
+.muted { color: var(--text-2); }
+.note { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; font-size: 0.875rem; color: var(--text-2); margin: 16px 0 0; }
+.note.warn { border-color: var(--amber); background: #FFF9EE; }
+.note.good { border-color: var(--accent); background: #EEFBF6; }
+.grid2 { display:grid; grid-template-columns: 1.2fr 1fr; gap:24px; align-items:start; }
+.card { border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { text-align: left; padding: 9px 10px; font-weight: 600; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-2); border-bottom: 2px solid var(--line); }
+td { padding: 9px 10px; border-bottom: 1px solid var(--line); }
+tr:hover td { background: var(--card); }
+.seg { display:inline-block; font-size:0.7rem; font-weight:600; padding:2px 9px; border-radius:6px; white-space:nowrap; }
+.seg.champion { background:rgba(16,163,127,0.14); color:#0B7A61; }
+.seg.loyal { background:rgba(59,130,246,0.12); color:#1D4ED8; }
+.seg.stable { background:rgba(107,114,128,0.12); color:#4B5563; }
+.seg.risk { background:rgba(245,158,11,0.16); color:#92610A; }
+.seg.critical { background:rgba(239,68,68,0.14); color:#B91C1C; }
+.stat-big { text-align:center; padding: 10px 0; }
+.stat-big .n { font-size:3rem; font-weight:700; color:var(--accent); }
+.stat-big .l { color:var(--text-2); font-size:0.9rem; }
+.gauge-wrap { margin-top:20px; }
+.gauge-track { height:14px; border-radius:7px; background: linear-gradient(to right, #10A37F 0%, #10A37F 25%, #F59E0B 25%, #F59E0B 60%, #EF4444 60%, #EF4444 100%); position:relative; }
+.gauge-marker { position:absolute; top:-8px; width:4px; height:30px; background:#171717; border-radius:2px; }
+.gauge-labels { display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-2); margin-top:6px; }
+.cohort-table td, .cohort-table th { text-align:center; }
+.cohort-cell { width:28px; height:28px; border-radius:6px; display:inline-block; }
+.funnel { display:flex; flex-direction:column; align-items:center; gap:6px; margin:20px 0; }
+.funnel-step { color:#fff; font-weight:600; font-size:0.9rem; padding:14px; border-radius:8px; text-align:center; }
+footer { padding: 32px 0 48px; margin-top: 48px; border-top: 1px solid var(--line); color: var(--text-2); font-size: 0.875rem; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Продвинутая аналитика продаж</h1>
+    <p class="sub">RFM · ABC/Pareto · когорты · CLV · прогноз · индекс концентрации (HHI) · воронка статусов</p>
+    <div class="note">Все расчёты — на реальных 30 заказах demo-orders.csv (январь–июнь 2026, 8 клиентов). Методы стандартные (те же формулы, что в учебниках по маркетинг-аналитике), но посчитаны агентом за один проход, а не вручную в Excel.</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <h2>1. RFM-сегментация клиентов</h2>
+  <p class="sub">Recency (дней с последней покупки) × Frequency (число заказов) × Monetary (выручка) — стандартная модель для приоритизации работы с клиентской базой.</p>
+  <div class="grid2">
+    <div class="card">
+      <canvas id="rfmScatter" height="280"></canvas>
+      <p class="note">Пузырёк — клиент, размер = выручка. Чем левее и выше — тем «здоровее» клиент (недавно и часто покупает).</p>
+    </div>
+    <div class="card">
+      <table>
+        <tr><th>Клиент</th><th>R, дн.</th><th>F</th><th>M, ₽</th><th>Сегмент</th></tr>
+        <tr><td>ООО «Луч»</td><td>0</td><td>4</td><td>186 000</td><td><span class="seg champion">Чемпион</span></td></tr>
+        <tr><td>Козлова А.И.</td><td>12</td><td>4</td><td>132 000</td><td><span class="seg loyal">Лояльный</span></td></tr>
+        <tr><td>ООО «Звезда»</td><td>18</td><td>3</td><td>105 000</td><td><span class="seg stable">Стабильный</span></td></tr>
+        <tr><td>ИП Петров</td><td>24</td><td>3</td><td>95 000</td><td><span class="seg stable">Стабильный</span></td></tr>
+        <tr><td>ООО «Ромашка»</td><td>30</td><td>4</td><td>124 000</td><td><span class="seg loyal">Лояльный</span></td></tr>
+        <tr><td>Новиков Д.С.</td><td>36</td><td>3</td><td>125 000</td><td><span class="seg risk">Группа риска</span></td></tr>
+        <tr><td>ООО «Вектор»</td><td>42</td><td>3</td><td>130 000</td><td><span class="seg risk">Группа риска</span></td></tr>
+        <tr><td>ИП Сидоров</td><td>55</td><td>3</td><td>139 000</td><td><span class="seg critical">Нельзя терять</span></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="note warn"><strong>Главная находка блока:</strong> ИП Сидоров дольше всех не покупал (55 дней) — и при этом второй по CLV (см. блок 5). Это ровно тот клиент, которого дороже всего потерять, и именно он сейчас без внимания. Классический слепой пример: следить нужно не только «кто много платит», но и «кто много платит и давно молчит».</div>
+
+  <h2>2. ABC/Pareto-анализ по клиентам</h2>
+  <p class="sub">Кто даёт 80% выручки — управленческая классика: на класс A стоит тратить больше времени и внимания, чем на класс C.</p>
+  <div class="card">
+    <canvas id="paretoChart" height="110"></canvas>
+  </div>
+  <div class="note">На 8 клиентах распределение почти ровное (класс A получился широким — 5 из 8) — само по себе тоже вывод: чем шире и разнообразнее база, тем резче будет граница 80/20. На реальной базе в сотни клиентов классы обычно разделяются гораздо чётче.</div>
+
+  <h2>3. Индекс концентрации клиентов (HHI)</h2>
+  <p class="sub">Herfindahl-Hirschman Index — сумма квадратов долей выручки каждого клиента, стандартная метрика риска зависимости от узкого круга клиентов (используется и в антимонопольном анализе рынков).</p>
+  <div class="card">
+    <div class="stat-big"><span class="n">1298</span><span class="l"> из 10 000</span></div>
+    <div class="gauge-wrap">
+      <div class="gauge-track"><div class="gauge-marker" style="left:12.98%"></div></div>
+      <div class="gauge-labels"><span>0 — низкая концентрация</span><span>2500 — умеренная</span><span>10000 — монополия одного клиента</span></div>
+    </div>
+    <div class="note good">HHI = 1298 — концентрация низкая: выручка не зависит критично от одного клиента. Это количественно подтверждает качественный вывод из М1 («риск потери клиента из топ-5») — риск есть, но не критичный: если завтра уйдёт даже ООО «Луч» (крупнейший), бизнес не рухнет.</div>
+  </div>
+
+  <h2>4. Когортный анализ удержания</h2>
+  <p class="sub">В каких месяцах после первой покупки клиент возвращался — видно паттерн, а не только факт «купил один раз».</p>
+  <div class="card">
+    <div class="table-wrap" style="overflow-x:auto">
+      <table class="cohort-table">
+        <tr><th>Клиент</th><th>Янв</th><th>Фев</th><th>Мар</th><th>Апр</th><th>Май</th><th>Июн</th></tr>
+        <tr id="cohortRows"></tr>
+      </table>
+    </div>
+    <div class="note">Тёмная ячейка — была покупка в этом месяце. Ни один клиент не покупает каждый месяц подряд — покупательский цикл офисной мебели явно длиннее месяца, это нормально для категории (не сигнал оттока).</div>
+  </div>
+
+  <h2>5. CLV — пожизненная ценность клиента</h2>
+  <p class="sub">CLV = средний чек × частота покупок в месяц × 24 месяца (предположение о среднем горизонте B2B-отношений в этой нише).</p>
+  <div class="card">
+    <canvas id="clvChart" height="200"></canvas>
+    <div class="note warn">ИП Сидоров — второй по CLV (556 000 ₽ прогнозной ценности за 2 года), но при этом в сегменте «нельзя терять» из блока 1. Приоритет для звонка на этой неделе очевиден.</div>
+  </div>
+
+  <h2>6. Прогноз выручки на июль</h2>
+  <p class="sub">Два метода рядом — не потому что один «правильный», а чтобы показать, когда модели верить, а когда нет.</p>
+  <div class="card">
+    <canvas id="forecastChart" height="200"></canvas>
+    <div class="note warn"><strong>Честно про модель:</strong> линейная регрессия даёт R² ≈ 0 — тренда почти нет, есть только колебания («качели», как и в отчёте М1). В таких условиях линейный прогноз (168 700 ₽) не более надёжен, чем простое скользящее среднее за 3 месяца (170 000 ₽) — оба метода дали похожий результат именно потому, что тренда, который отличал бы их, попросту нет. Это самостоятельный вывод: не каждый ряд данных достоин линейной модели.</div>
+  </div>
+
+  <h2>7. Воронка статусов заказа</h2>
+  <p class="sub">Классическая sales funnel — но на данных о заказах, а не о лидах: сколько из оформленных заказов реально доходит до денег.</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="funnel">
+        <div class="funnel-step" style="background:#3B82F6;width:100%">Оформлено всего — 30 (100%)</div>
+        <div class="funnel-step" style="background:#F59E0B;width:90%">Не отменено — 27 (90%)</div>
+        <div class="funnel-step" style="background:#10A37F;width:67%">Оплачено — 20 (67%)</div>
+      </div>
+      <p class="note">Ширина полос — реальная доля от общего числа заказов, без искажений. «Не отменено» включает и уже оплаченные, и те, что ещё в пути (доставка/новый) — то есть всё, что не выбыло из воронки.</p>
+    </div>
+    <div class="card">
+      <div class="stat-big"><span class="n" style="color:var(--red)">10%</span><span class="l"> заказов отменено (3 из 30)</span></div>
+      <p class="note">Не критично, но каждая отмена — это упущенная выручка, которую видно только если считать воронку целиком, а не только «сколько продали».</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">Аналитика собрана ИИ-агентом на реальных demo-данных · практикум М4-02 «Продвинутая аналитика для инвесторов и партнёров» · Методы — стандартные модели маркетинг- и финансовой аналитики</div>
+</footer>
+
+<script>
+const chartColors = { primary:'#10A37F', secondary:'#3B82F6', amber:'#F59E0B', red:'#EF4444', purple:'#8B5CF6', grid:'#E5E7EB', text:'#6B7280' };
+const baseOpts = {
+  responsive:true,
+  plugins:{ legend:{ labels:{ font:{family:'Inter',size:12}, color:'#6B7280' } } },
+  scales:{
+    x:{ grid:{color:'#E5E7EB'}, ticks:{color:'#6B7280',font:{size:11}} },
+    y:{ grid:{color:'#E5E7EB'}, ticks:{color:'#6B7280',font:{size:11}}, beginAtZero:true }
+  }
+};
+
+const rfm = [
+  {c:"ООО «Луч»", r:0, f:4, m:186000, seg:'champion'},
+  {c:"Козлова А.И.", r:12, f:4, m:132000, seg:'loyal'},
+  {c:"ООО «Звезда»", r:18, f:3, m:105000, seg:'stable'},
+  {c:"ИП Петров", r:24, f:3, m:95000, seg:'stable'},
+  {c:"ООО «Ромашка»", r:30, f:4, m:124000, seg:'loyal'},
+  {c:"Новиков Д.С.", r:36, f:3, m:125000, seg:'risk'},
+  {c:"ООО «Вектор»", r:42, f:3, m:130000, seg:'risk'},
+  {c:"ИП Сидоров", r:55, f:3, m:139000, seg:'critical'},
+];
+const segColor = {champion:'#10A37F', loyal:'#3B82F6', stable:'#9CA3AF', risk:'#F59E0B', critical:'#EF4444'};
+
+new Chart(document.getElementById('rfmScatter'), {
+  type:'bubble',
+  data:{ datasets: rfm.map(d => ({
+    label: d.c,
+    data: [{x:d.r, y:d.f, r: Math.sqrt(d.m)/12}],
+    backgroundColor: segColor[d.seg] + 'CC'
+  })) },
+  options:{ ...baseOpts, plugins:{legend:{position:'bottom', labels:{boxWidth:10, font:{size:10}}}},
+    scales:{ x:{title:{display:true,text:'Recency, дней (меньше = лучше)',color:'#6B7280'},grid:{color:'#E5E7EB'},ticks:{color:'#6B7280'}},
+             y:{title:{display:true,text:'Frequency, заказов',color:'#6B7280'},grid:{color:'#E5E7EB'},ticks:{color:'#6B7280'},min:2,max:5} } }
+});
+
+const paretoSorted = [...rfm].sort((a,b)=>b.m-a.m);
+const totalRev = paretoSorted.reduce((s,d)=>s+d.m,0);
+let cum = 0;
+const cumPct = paretoSorted.map(d => { cum += d.m; return cum/totalRev*100; });
+new Chart(document.getElementById('paretoChart'), {
+  data:{ labels: paretoSorted.map(d=>d.c),
+    datasets:[
+      {type:'bar', label:'Выручка, ₽', data: paretoSorted.map(d=>d.m), backgroundColor:'#10A37F', borderRadius:6, yAxisID:'y'},
+      {type:'line', label:'Накопительно, %', data: cumPct, borderColor:'#EF4444', backgroundColor:'#EF4444', yAxisID:'y1', tension:0.2}
+    ]},
+  options:{ ...baseOpts, plugins:{legend:{position:'bottom'}},
+    scales:{ x:{grid:{display:false},ticks:{color:'#6B7280',font:{size:10}}},
+             y:{position:'left',grid:{color:'#E5E7EB'},ticks:{color:'#6B7280'}},
+             y1:{position:'right',grid:{display:false},min:0,max:100,ticks:{color:'#EF4444',callback:v=>v+'%'}} } }
+});
+
+const monthsShort = ['Янв','Фев','Мар','Апр','Май','Июн'];
+const cohortData = {
+  "ООО «Ромашка»": [1,1,0,1,1,0],
+  "ИП Петров": [1,0,0,1,0,1],
+  "ООО «Звезда»": [1,0,1,0,0,1],
+  "Козлова А.И.": [1,0,1,1,0,1],
+  "ИП Сидоров": [1,0,1,0,1,0],
+  "ООО «Луч»": [0,1,1,0,1,1],
+  "ООО «Вектор»": [0,1,1,0,1,0],
+  "Новиков Д.С.": [0,1,0,1,1,0],
+};
+document.getElementById('cohortRows').outerHTML = Object.entries(cohortData).map(([c,arr]) => `
+  <tr><td style="text-align:left">${c}</td>${arr.map(v=>`<td><span class="cohort-cell" style="background:${v?'#10A37F':'#E5E7EB'}"></span></td>`).join('')}</tr>
+`).join('');
+
+const clvSorted = [...rfm].map(d => ({...d, clv: (d.m/d.f)*(d.f/6)*24})).sort((a,b)=>b.clv-a.clv);
+new Chart(document.getElementById('clvChart'), {
+  type:'bar',
+  data:{ labels: clvSorted.map(d=>d.c), datasets:[{ data: clvSorted.map(d=>Math.round(d.clv)), backgroundColor: clvSorted.map(d=>segColor[d.seg]), borderRadius:6 }] },
+  options:{ ...baseOpts, indexAxis:'y', plugins:{legend:{display:false}} }
+});
+
+new Chart(document.getElementById('forecastChart'), {
+  data:{ labels: [...monthsShort, 'Июл (прогноз)'],
+    datasets:[
+      {type:'line', label:'Факт', data:[197000,131000,198000,144000,219000,147000,null], borderColor:'#10A37F', backgroundColor:'#10A37F', tension:0.25},
+      {type:'line', label:'Линейная регрессия', data:[null,null,null,null,null,147000,168667], borderColor:'#3B82F6', borderDash:[6,4], backgroundColor:'#3B82F6'},
+      {type:'line', label:'Скользящее среднее (3м)', data:[null,null,null,null,null,147000,170000], borderColor:'#8B5CF6', borderDash:[2,3], backgroundColor:'#8B5CF6'},
+    ]},
+  options: baseOpts
+});
+</script>
+
+</body>
+</html>
