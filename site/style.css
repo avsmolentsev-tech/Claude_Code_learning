@@ -22,6 +22,51 @@ header.site {
   padding: 16px 0;
 }
 header.site .container { display: flex; justify-content: space-between; align-items: center; }
+.head-nav { display: flex; gap: 20px; align-items: center; font-size: 0.875rem; }
+.head-nav a { text-decoration: none; white-space: nowrap; }
+.head-nav .skip { font-weight: 500; }
+@media (max-width: 620px) {
+  .logo span { display: none; }
+  .head-nav { gap: 14px; font-size: 0.8125rem; }
+  .head-nav .to-index { display: none; }
+}
+.jump { margin-bottom: 8px; }
+.jump-title { font-size: 0.875rem; color: var(--text-2); margin-bottom: 10px; }
+.jump-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.jump-grid a {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--card);
+}
+.jump-grid a:hover { border-color: var(--accent); color: var(--accent); }
+.jump-grid a .m { color: var(--text-2); margin-right: 6px; }
+.jump-grid a:hover .m { color: var(--accent); }
+.card { scroll-margin-top: 24px; }
+.card .status .row { display: block; margin-top: 8px; }
+.card .status .extra {
+  display: block;
+  margin: 10px 0;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.tag-new {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-right: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
 .logo { font-weight: 600; text-decoration: none; color: var(--text); }
 .logo span { color: var(--accent); }
 h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 16px; }
@@ -232,4 +277,14 @@ footer.site {
   padding: 24px 0 48px;
   color: var(--text-2);
   font-size: 0.875rem;
+}
+
+/* Мобильные: таблицы и код не должны распирать страницу по ширине */
+@media (max-width: 620px) {
+  /* Таблица прокручивается внутри себя, а не растягивает страницу.
+     Слова при этом не рубятся посреди — читаемость важнее компактности. */
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  th, td { padding: 10px 12px; font-size: 0.8125rem; min-width: 108px; }
+  pre { font-size: 0.75rem; padding: 12px; }
+  code { overflow-wrap: break-word; }
 }
