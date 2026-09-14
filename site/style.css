@@ -288,3 +288,55 @@ footer.site {
   pre { font-size: 0.75rem; padding: 12px; }
   code { overflow-wrap: break-word; }
 }
+
+/* ── Практические кейсы: бейджи и фильтр по отделам ── */
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--code-bg);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.tag-dept { background: rgba(16, 163, 127, 0.12); color: var(--accent); font-weight: 500; }
+.tag-diff.d1 { background: #ECFDF5; color: #047857; }
+.tag-diff.d2 { background: #FFFBEB; color: #B45309; }
+.tag-diff.d3 { background: #FEF2F2; color: #B91C1C; }
+.bring { font-size: 0.875rem; color: var(--text-2); margin-bottom: 16px; }
+.dept-nav { gap: 8px; }
+.dept-btn {
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 7px 13px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dept-btn:hover { border-color: var(--accent); color: var(--accent); }
+.dept-btn .m { color: var(--text-2); margin-left: 6px; font-size: 0.8125rem; }
+.dept-btn.is-on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.dept-btn.is-on .m { color: rgba(255, 255, 255, 0.75); }
+/* В карточках практик абзацы дышат: .card p { margin:0 } перебивал отступы */
+.card.case p { margin-bottom: 12px; }
+.card.case p.tags { margin-bottom: 10px; }
+.card.case p.bring { margin-bottom: 16px; }
+.card.case ol, .card.case ul { margin-bottom: 14px; }
+
+/* ── Страница практики: разведение аудиторий ── */
+.aud { border-left: 3px solid var(--line); padding-left: 20px; margin: 32px 0; }
+.aud-label {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 4px 10px; border-radius: 6px; margin-bottom: 8px;
+}
+.aud-part { border-left-color: var(--accent); }
+.aud-part .aud-label { background: rgba(16, 163, 127, 0.12); color: var(--accent); }
+.aud-find { border-left-color: var(--text-2); background: var(--card); padding: 20px; border-radius: 0 12px 12px 0; }
+.aud-find .aud-label { background: #E5E7EB; color: #374151; }
+@media (max-width: 620px) { .aud { padding-left: 14px; } .aud-host { padding: 14px; } }
